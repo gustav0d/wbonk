@@ -1,84 +1,131 @@
-# Turborepo starter
+<div id="top"></div>
 
-This Turborepo starter is maintained by the Turborepo core team.
+## wbonk
 
-## Using this example
+<!-- TABLE OF CONTENTS -->
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#about-the-project">About The Project</a>
+      <ul>
+        <li><a href="#built-with">Built With</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#installation">Installation</a></li>
+      </ul>
+    </li>
+    <li><a href="#contributing">Contributing</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ol>
+</details>
 
-Run the following command:
+## About the project
+
+wbonk is a bank CRUD.
+
+### Built With
+
+[![React][react.js]][react-url]
+[![Node][node.js]][node-url]
+[![GraphQL][graphql]][graphql-url]
+[![MongoDB][mongodb]][mongodb-url]
+[![Koa][koa]][koa-url]
+
+## Getting Started
+
+To get a local copy up and running follow these simple example steps.
+
+### Prerequisites
+
+This is an example of how to list things you need to use the software and how to install them.
+
+- Node.js
+
+  ```sh
+  https://nodejs.org/en/download/
+  ```
+
+- PNPM
+
+  ```sh
+  npm install pnpm -g
+  ```
+
+- Docker
+
+  ```sh
+  https://www.docker.com/get-started/
+  ```
+
+## Installation
+
+Clone the repo
 
 ```sh
-npx create-turbo@latest
+git clone https://github.com/gustav0d/wbonk.git
 ```
 
-## What's inside?
+1. Install packages
 
-This Turborepo includes the following packages/apps:
+   ```sh
+   pnpm install
+   ```
 
-### Apps and Packages
+2. Run containers
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+   ```sh
+   pnpm compose:up
+   ```
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+3. Run the Project
 
-### Utilities
+   ```sh
+   pnpm dev
+   ```
 
-This Turborepo has some additional tools already setup for you:
+# Contributing
 
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
+Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
-### Build
+If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
+Don't forget to give the project a star! Thanks again!
 
-To build all apps and packages, run the following command:
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/amazing-feature`)
+3. Commit your Changes (`git commit -m 'feat(amazing-feature): my feature is awesome'`)
+4. Push to the Branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-```
-cd my-turborepo
-pnpm build
-```
+## References
 
-### Develop
+- [turbo](https://turbo.build/repo/docs/getting-started/add-to-existing-repository)
+- [woovi-playground](https://github.com/woovibr/woovi-playground)
 
-To develop all apps and packages, run the following command:
+<!-- CONTACT -->
 
-```
-cd my-turborepo
-pnpm dev
-```
+## Contact
 
-### Remote Caching
+[Contact me](https://bento.me/dantas)
 
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
+Project Link: [https://github.com/gustav0d/wbonk](https://github.com/gustav0d/wbonk)
 
-Turborepo can use a technique known as [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
+<p align="right">(<a href="#top">back to top</a>)</p>
 
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 
-```
-cd my-turborepo
-npx turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-```
-npx turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turborepo.com/docs/core-concepts/monorepos/running-tasks)
-- [Caching](https://turborepo.com/docs/core-concepts/caching)
-- [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.com/docs/core-concepts/monorepos/filtering)
-- [Configuration Options](https://turborepo.com/docs/reference/configuration)
-- [CLI Usage](https://turborepo.com/docs/reference/command-line-reference)
+[react.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
+[react-url]: https://reactjs.org/
+[node.js]: https://img.shields.io/badge/NodeJS-339933?style=for-the-badge&logo=nodedotjs&logoColor=white
+[node-url]: https://nodejs.org/
+[graphql]: https://img.shields.io/badge/Graphql-E10098?style=for-the-badge&logo=graphql&logoColor=white
+[graphql-url]: https://graphql.org/
+[mongodb]: https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white
+[mongodb-url]: https://mongodb.com
+[koa]: https://img.shields.io/badge/Koa-F9F9F9?style=for-the-badge&logo=koa&logoColor=33333D
+[koa-url]: https://koajs.com
