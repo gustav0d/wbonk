@@ -1,0 +1,24 @@
+{
+  "extends": "@wbonk/typescript-config/base.json",
+  "compilerOptions": {
+    "composite": true,
+    "incremental": true,
+    "sourceMap": true,
+    "allowSyntheticDefaultImports": true,
+    "outDir": "./build/tsc",
+    "rootDir": "./src",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    "tsBuildInfoFile": "./dist/tsconfig.tsbuildinfo",
+    "preserveSymlinks": true
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": [
+    "src/**/*.spec.ts",
+    "src/**/__tests__/**/*",
+    "src/modules/*/fixture/*",
+    "test/**/*"
+  ]
+}
