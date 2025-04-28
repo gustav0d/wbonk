@@ -1,0 +1,9 @@
+services:
+  mongodb:
+    image: mongo
+    container_name: mongodb_bonk
+    ports:
+      - '27017:27017'
+    environment:
+      - MONGO_INITDB_DATABASE=bonk
+    restart: always
