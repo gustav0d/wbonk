@@ -21,7 +21,7 @@ const getDataloaders = (): Dataloaders =>
   (Object.keys(loaders) as (keyof Dataloaders)[]).reduce(
     (prev, loaderKey) => ({
       ...prev,
-      [loaderKey]: loaders[loaderKey](),
+      [loaderKey]: loaders[loaderKey]?.(),
     }),
     {}
   ) as Dataloaders;
