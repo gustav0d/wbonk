@@ -1,7 +1,7 @@
 interface Dataloaders {
-  // SomethingLoader: ReturnType<
-  //   typeof import('../something/something-loader').SomethingLoader.getLoader
-  // >;
+  AccountLoader: ReturnType<
+    typeof import('../account/account-loader').AccountLoader.getLoader
+  >;
 }
 
 type Loaders =
