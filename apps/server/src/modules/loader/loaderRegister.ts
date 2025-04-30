@@ -2,6 +2,9 @@ interface Dataloaders {
   AccountLoader: ReturnType<
     typeof import('../account/account-loader').AccountLoader.getLoader
   >;
+  TransactionLoader: ReturnType<
+    typeof import('../transaction/transaction-loader').TransactionLoader.getLoader
+  >;
 }
 
 type Loaders =
