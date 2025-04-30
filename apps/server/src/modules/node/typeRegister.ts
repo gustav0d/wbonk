@@ -32,7 +32,7 @@ const getTypeRegister = () => {
     },
     (obj: GraphQLTypeResolver<unknown, unknown>) => {
       const { type } = typesLoaders[obj.constructor.name] || { type: null };
-      return type.name;
+      return type?.name;
     }
   );
 
