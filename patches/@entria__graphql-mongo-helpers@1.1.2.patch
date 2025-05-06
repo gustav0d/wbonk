@@ -1,0 +1,13 @@
+diff --git a/src/types.ts b/src/types.ts
+index 81508d9922b8adb3d2ea04879f043ecf288665f9..d17d92f26cc69d20aafac3522e87df98f404d1c5 100644
+--- a/src/types.ts
++++ b/src/types.ts
+@@ -1,6 +1,6 @@
+-import { Types } from 'mongoose';
++import { Schema, Types } from 'mongoose';
+ 
+-export type DataLoaderKey = string | Types.ObjectId;
++export type DataLoaderKey = string | Types.ObjectId | Schema.Types.ObjectId;
+ 
+ export type BuiltConditionSet = {
+   conditions: any;
