@@ -9,7 +9,7 @@ import { UserLoader } from '../user-loader';
 import { GraphQLContext } from '../../../graphql/context';
 import { fieldError } from '@/utils/field-error';
 import { NewUserArgs, validateAndSanitizeNewUser } from '@/utils/validate-user';
-import { generateToken, setAuthCookie } from '@/auth';
+import { generateToken } from '@/auth';
 import { FieldErrorField } from '@/modules/field-error/field-error-field';
 import { Account } from '@/modules/account/account-model';
 import { AccountType } from '@/modules/account/account-type';
@@ -62,8 +62,6 @@ const UserSignUpMutation = mutationWithClientMutationId({
     }).save();
 
     const token = generateToken(user);
-
-    setAuthCookie(ctx, user);
 
     return {
       token,
