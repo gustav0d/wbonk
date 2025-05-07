@@ -1,23 +1,22 @@
-import mongoose, { Schema, type Document, type Model } from 'mongoose';
+import mongoose, { Schema, Types, type Document, type Model } from 'mongoose';
 
 export type TransactionStatus = 'PENDING' | 'PAID' | 'FAILED';
 export type TransactionType = 'CREDIT' | 'DEBIT' | 'PIX';
 
 export type TransactionModel = {
+  _id: Types.ObjectId;
   publicId: number;
   amount: number;
-  originSenderAccountId: mongoose.Types.ObjectId;
-  destinationReceiverAccountId: mongoose.Types.ObjectId;
+  originAccount: Types.ObjectId;
+  receiverAccount: Types.ObjectId;
   status: TransactionStatus;
   type: TransactionType;
   createdAt: Date;
   updatedAt: Date | null;
   idempotencyKey: string;
-};
+} & Document;
 
-export type TransactionModelDocument = TransactionModel & Document;
-
-const transactionSchema = new mongoose.Schema<TransactionModelDocument>(
+const TransactionSchema = new mongoose.Schema<TransactionModel>(
   {
     publicId: Number,
     amount: Number,
@@ -31,13 +30,13 @@ const transactionSchema = new mongoose.Schema<TransactionModelDocument>(
       enum: ['PIX', 'CREDIT', 'DEBIT'],
       description: 'Type of operation "PIX", "CREDIT" or "DEBIT"',
     },
-    destinationReceiverAccountId: {
-      type: Schema.Types.ObjectId,
-      description: 'Destination account that will receive the amount',
-    },
-    originSenderAccountId: {
+    originAccount: {
       type: Schema.Types.ObjectId,
       description: 'Origin account that will send the amount sent',
+    },
+    receiverAccount: {
+      type: Schema.Types.ObjectId,
+      description: 'Destination account that will receive the amount',
     },
     idempotencyKey: {
       type: String,
@@ -50,7 +49,7 @@ const transactionSchema = new mongoose.Schema<TransactionModelDocument>(
   }
 );
 
-export const Transaction: Model<TransactionModelDocument> = mongoose.model(
+export const Transaction: Model<TransactionModel> = mongoose.model(
   'Transaction',
-  transactionSchema
+  TransactionSchema
 );
