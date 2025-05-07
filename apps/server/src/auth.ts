@@ -37,7 +37,7 @@ async function getUser(ctx: ParameterizedContext): Promise<GetUserResult> {
 }
 
 function generateToken(user: UserDocument) {
-  return `JWT ${jwt.sign({ id: user._id }, config.JWT_SECRET)}`;
+  return jwt.sign({ id: user._id }, config.JWT_SECRET);
 }
 
 export { getUser, generateToken };

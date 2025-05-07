@@ -7,7 +7,7 @@ interface IUser {
   email: string;
   createdAt: Date;
   updatedAt: Date;
-  username: string;
+  name: string;
   password: string;
   encryptPassword: (password: string) => string;
   authenticate: (plainTextPassword: string) => boolean;
@@ -18,7 +18,7 @@ type UserDocument = Document & IUser;
 
 const UserSchema = new Schema<UserDocument>(
   {
-    username: {
+    name: {
       type: String,
       required: true,
     },
