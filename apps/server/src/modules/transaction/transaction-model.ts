@@ -38,10 +38,6 @@ const TransactionSchema = new mongoose.Schema<TransactionModel>(
       type: Schema.Types.ObjectId,
       description: 'Destination account that will receive the amount',
     },
-    idempotencyKey: {
-      type: String,
-      description: 'The unique Idempotency key to identify the transaction',
-    },
   },
   {
     collection: 'Transaction',
