@@ -1,5 +1,6 @@
-import { GraphQLObjectType } from 'graphql';
+import { GraphQLInt, GraphQLObjectType, GraphQLString } from 'graphql';
 import { connectionArgs } from 'graphql-relay';
+import { withFilter } from '@entria/graphql-mongo-helpers';
 
 import { GraphQLContext } from '@/graphql/context';
 import { nodeField, nodesField } from '@/modules/node/typeRegister';
@@ -9,6 +10,7 @@ import { TransactionLoader } from '@/modules/transaction/transaction-loader';
 import { TransactionType } from '@/modules/transaction/transaction-type';
 import { UserType } from '@/modules/user/user-type';
 import { UserLoader } from '@/modules/user/user-loader';
+import { Account } from '@/modules/account/account-model';
 
 export const QueryType = new GraphQLObjectType({
   name: 'Query',
@@ -18,8 +20,26 @@ export const QueryType = new GraphQLObjectType({
     nodes: nodesField,
     me: {
       type: UserType,
-      resolve: (_, __, ctx: GraphQLContext) => {
-        return UserLoader.load(ctx, ctx.user?.id);
+      resolve: async (_, __, context: GraphQLContext) => {
+        if (!context.user) {
+          throw new Error('Unauthorized');
+        }
+
+        return await UserLoader.load(context, context.user._id);
+      },
+    },
+    myAccount: {
+      type: AccountType,
+      resolve: async (_, __, context: GraphQLContext) => {
+        if (!context.user) {
+          throw new Error('Unauthorized');
+        }
+
+        const account = await Account.findOne({ user: context.user._id });
+
+        if (!account) return null;
+
+        return await AccountLoader.load(context, account._id);
       },
     },
     users: {
@@ -27,8 +47,16 @@ export const QueryType = new GraphQLObjectType({
       args: {
         ...connectionArgs,
       },
-      resolve: async (_, args, context: GraphQLContext) =>
-        await UserLoader.loadAll(context, args),
+      resolve: async (_, args, context: GraphQLContext) => {
+        if (!context.user) {
+          throw new Error('Unauthorized');
+        }
+
+        return await UserLoader.loadAll(
+          context,
+          withFilter(args, { _id: { $ne: context.user._id } })
+        );
+      },
     },
     accounts: {
       type: AccountType,
@@ -43,8 +71,22 @@ export const QueryType = new GraphQLObjectType({
       args: {
         ...connectionArgs,
       },
-      resolve: async (_, args, context: GraphQLContext) =>
-        await TransactionLoader.loadAll(context, args),
+      resolve: async (_, args, context: GraphQLContext) => {
+        if (!context.user) {
+          throw new Error('Unauthorized');
+        }
+
+        const currentUserAccount = await Account.findOne({
+          user: context.user._id,
+        });
+
+        if (!currentUserAccount) return null;
+
+        return await TransactionLoader.loadAll(
+          context,
+          withFilter(args, { originAccount: currentUserAccount._id })
+        );
+      },
     },
   }),
 });
