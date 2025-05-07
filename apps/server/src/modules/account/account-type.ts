@@ -1,31 +1,41 @@
-import { GraphQLObjectType, GraphQLString } from 'graphql';
+import { GraphQLNonNull, GraphQLObjectType, GraphQLString } from 'graphql';
 import { connectionDefinitions, globalIdField } from 'graphql-relay';
 import { IAccount } from './account-model';
 import { nodeInterface, registerTypeLoader } from '../node/typeRegister';
 import { AccountLoader } from './account-loader';
+import { UserType } from '../user/user-type';
+import { UserLoader } from '../user/user-loader';
+import {
+  objectIdResolver,
+  timestampResolver,
+} from '@entria/graphql-mongo-helpers';
 
 const AccountType = new GraphQLObjectType<IAccount>({
   name: 'Account',
   description: 'Represents an account with balance',
   fields: () => ({
     id: globalIdField('Account'),
+    accountName: {
+      type: GraphQLString,
+      resolve: (account) => account.accountName,
+    },
     balance: {
       type: GraphQLString,
       resolve: (account) => account.balance,
+    },
+    user: {
+      type: new GraphQLNonNull(UserType),
+      resolve: async (account, _, ctx) => {
+        return UserLoader.load(ctx, account.user);
+      },
     },
     deletedAt: {
       type: GraphQLString,
       resolve: (account) =>
         account.deletedAt ? account.deletedAt.toISOString() : null,
     },
-    createdAt: {
-      type: GraphQLString,
-      resolve: (account) => account.createdAt.toISOString(),
-    },
-    updatedAt: {
-      type: GraphQLString,
-      resolve: (account) => account.updatedAt?.toISOString(),
-    },
+    ...objectIdResolver,
+    ...timestampResolver,
   }),
   interfaces: () => [nodeInterface],
 });

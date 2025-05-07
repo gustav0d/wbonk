@@ -1,11 +1,14 @@
 import { GraphQLObjectType } from 'graphql';
 import { connectionArgs } from 'graphql-relay';
+
 import { GraphQLContext } from '@/graphql/context';
 import { nodeField, nodesField } from '@/modules/node/typeRegister';
 import { AccountLoader } from '@/modules/account/account-loader';
-import { AccountConnection } from '@/modules/account/account-type';
+import { AccountType } from '@/modules/account/account-type';
 import { TransactionLoader } from '@/modules/transaction/transaction-loader';
-import { TransactionConnection } from '@/modules/transaction/transaction-type';
+import { TransactionType } from '@/modules/transaction/transaction-type';
+import { UserType } from '@/modules/user/user-type';
+import { UserLoader } from '@/modules/user/user-loader';
 
 export const QueryType = new GraphQLObjectType({
   name: 'Query',
@@ -13,8 +16,22 @@ export const QueryType = new GraphQLObjectType({
   fields: () => ({
     node: nodeField,
     nodes: nodesField,
+    me: {
+      type: UserType,
+      resolve: (_, __, ctx: GraphQLContext) => {
+        return UserLoader.load(ctx, ctx.user?.id);
+      },
+    },
+    users: {
+      type: UserType,
+      args: {
+        ...connectionArgs,
+      },
+      resolve: async (_, args, context: GraphQLContext) =>
+        await UserLoader.loadAll(context, args),
+    },
     accounts: {
-      type: AccountConnection.connectionType,
+      type: AccountType,
       args: {
         ...connectionArgs,
       },
@@ -22,7 +39,7 @@ export const QueryType = new GraphQLObjectType({
         await AccountLoader.loadAll(context, args),
     },
     transactions: {
-      type: TransactionConnection.connectionType,
+      type: TransactionType,
       args: {
         ...connectionArgs,
       },

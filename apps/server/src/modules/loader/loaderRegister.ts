@@ -5,6 +5,9 @@ interface Dataloaders {
   TransactionLoader: ReturnType<
     typeof import('../transaction/transaction-loader').TransactionLoader.getLoader
   >;
+  UserLoader: ReturnType<
+    typeof import('../user/user-loader').UserLoader.getLoader
+  >;
 }
 
 type Loaders =

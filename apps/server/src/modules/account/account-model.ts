@@ -1,12 +1,31 @@
 import type { Document, Model } from 'mongoose';
 import mongoose from 'mongoose';
-import { ObjectId } from 'mongoose';
+import { Schema, Types } from 'mongoose';
 
-const Schema = new mongoose.Schema<IAccount>(
+export type IAccount = {
+  _id: Types.ObjectId;
+  accountName: String;
+  balance: number;
+  user: Types.ObjectId;
+  createdAt: Date;
+  updatedAt?: Date | null;
+  deletedAt?: Date | null;
+} & Document;
+
+const AccountSchema = new mongoose.Schema<IAccount>(
   {
+    accountName: {
+      type: String,
+    },
     balance: {
       type: Number,
       description: 'Balance amount from account',
+    },
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: 'user',
+      required: true,
+      description: 'The owner of this account',
     },
   },
   {
@@ -15,12 +34,7 @@ const Schema = new mongoose.Schema<IAccount>(
   }
 );
 
-export type IAccount = {
-  _id: ObjectId;
-  balance: number;
-  createdAt: Date;
-  updatedAt?: Date | null;
-  deletedAt?: Date | null;
-} & Document;
-
-export const Account: Model<IAccount> = mongoose.model('Account', Schema);
+export const Account: Model<IAccount> = mongoose.model(
+  'Account',
+  AccountSchema
+);
