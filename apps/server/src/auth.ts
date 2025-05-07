@@ -15,12 +15,16 @@ interface GetUserResult {
 }
 
 async function getUser(ctx: ParameterizedContext): Promise<GetUserResult> {
-  const token = ctx.cookies.get('jwt');
+  const authHeader = ctx.headers.authorization;
 
-  if (!token) return { user: null };
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    return { user: null };
+  }
+
+  const token = authHeader.replace('Bearer ', '');
 
   try {
-    const decodedToken = jwt.verify(token.substring(4), config.JWT_SECRET);
+    const decodedToken = jwt.verify(token, config.JWT_SECRET);
 
     const user = await UserModel.findOne({
       _id: (decodedToken as DecodedToken).id,
@@ -36,14 +40,4 @@ function generateToken(user: UserDocument) {
   return `JWT ${jwt.sign({ id: user._id }, config.JWT_SECRET)}`;
 }
 
-function setAuthCookie(ctx: ParameterizedContext, user: UserDocument) {
-  ctx.cookies.set(AUTH_COOKIE_NAME, generateToken(user), {
-    sameSite: 'lax',
-    httpOnly: true,
-    maxAge: 1000 * 60 * 60 * 24,
-    secure: false,
-    signed: false,
-  });
-}
-
-export { getUser, generateToken, setAuthCookie };
+export { getUser, generateToken };
