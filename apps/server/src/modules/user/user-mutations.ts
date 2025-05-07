@@ -1,7 +1,4 @@
+import { UserSignInMutation } from './mutations/user-sign-in-mutation';
 import { UserSignUpMutation } from './mutations/user-sign-up-mutation';
 
-const UserMutations = {
-  UserSignUpMutation,
-};
-
-export { UserMutations };
+export { UserSignUpMutation, UserSignInMutation };
