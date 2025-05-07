@@ -4,7 +4,7 @@ import { Schema, Types } from 'mongoose';
 
 export type IAccount = {
   _id: Types.ObjectId;
-  accountName: String;
+  accountName: string;
   balance: number;
   user: Types.ObjectId;
   createdAt: Date;

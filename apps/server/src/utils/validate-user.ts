@@ -4,12 +4,12 @@ import { fieldError } from './field-error';
 
 interface NewUserArgs {
   email: string;
-  username: string;
+  name: string;
   password: string;
 }
 
-function validateUsername(username: string) {
-  return validator.isAlphanumeric(username);
+function validateUserName(name: string) {
+  return validator.isAlphanumeric(name);
 }
 
 function validateAndSanitizeNewUser(args: NewUserArgs) {
@@ -19,18 +19,18 @@ function validateAndSanitizeNewUser(args: NewUserArgs) {
     return { error: fieldError('email', 'Invalid Email') };
   }
 
-  const isValidUsername = validateUsername(args.username);
+  const isValidUserName = validateUserName(args.name);
 
-  if (!isValidUsername) {
-    return { error: fieldError('username', 'Invalid Username') };
+  if (!isValidUserName) {
+    return { error: fieldError('name', 'Invalid UserName') };
   }
 
   return {
-    username: args.username.trim(),
+    name: args.name.trim(),
     password: args.password.trim(),
     email: args.email.trim().toLowerCase(),
   };
 }
 
 export type { NewUserArgs };
-export { validateUsername, validateAndSanitizeNewUser };
+export { validateUserName as validateUserName, validateAndSanitizeNewUser };

@@ -20,7 +20,7 @@ type UserSignUpMutationArgs = NewUserArgs;
 const UserSignUpMutation = mutationWithClientMutationId({
   name: 'UserSignUpMutation',
   inputFields: {
-    username: {
+    name: {
       type: new GraphQLNonNull(GraphQLString),
     },
     email: {
@@ -34,8 +34,7 @@ const UserSignUpMutation = mutationWithClientMutationId({
     args: UserSignUpMutationArgs,
     { ctx }: GraphQLContext
   ) => {
-    const { username, email, password, error } =
-      validateAndSanitizeNewUser(args);
+    const { name, email, password, error } = validateAndSanitizeNewUser(args);
 
     if (error) {
       return { ...error, success: false };
@@ -48,7 +47,7 @@ const UserSignUpMutation = mutationWithClientMutationId({
     }
 
     const user = await new UserModel({
-      username,
+      name,
       email,
       password,
     }).save();
@@ -56,7 +55,7 @@ const UserSignUpMutation = mutationWithClientMutationId({
     // create an account for the user
     const account = await new Account({
       // for now, set a default accountName like this (maybe ask to the user later?)
-      accountName: `${user.username}-${new Types.ObjectId().toString()}`,
+      accountName: `${user.name}-${new Types.ObjectId().toString()}`,
       user: user._id,
       balance: 0, // default balance
     }).save();
