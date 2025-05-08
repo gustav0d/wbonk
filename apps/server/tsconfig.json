@@ -12,7 +12,8 @@
       "@/*": ["./src/*"]
     },
     "tsBuildInfoFile": "./dist/tsconfig.tsbuildinfo",
-    "preserveSymlinks": true
+    "preserveSymlinks": true,
+    "typeRoots": ["./src/__tests__/@types"]
   },
   "include": ["src/**/*.ts"],
   "exclude": [
