@@ -62,7 +62,7 @@ const CreateTransactionFromSignedInUserMutation = mutationWithClientMutationId({
     }
 
     const [originAccount, receiverAccount] = await Promise.all([
-      AccountLoader.load(ctx, ctx.user._id),
+      Account.findOne({ user: ctx.user._id }),
       Account.findOne({ _id: receiverAccountId }),
     ]);
 
