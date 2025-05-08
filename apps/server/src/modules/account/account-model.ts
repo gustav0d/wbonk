@@ -2,7 +2,7 @@ import type { Document, Model } from 'mongoose';
 import mongoose from 'mongoose';
 import { Schema, Types } from 'mongoose';
 
-export type IAccount = {
+export type AccountDocument = {
   _id: Types.ObjectId;
   accountName: string;
   balance: number;
@@ -12,7 +12,7 @@ export type IAccount = {
   deletedAt?: Date | null;
 } & Document;
 
-const AccountSchema = new mongoose.Schema<IAccount>(
+const AccountSchema = new mongoose.Schema<AccountDocument>(
   {
     accountName: {
       type: String,
@@ -35,7 +35,7 @@ const AccountSchema = new mongoose.Schema<IAccount>(
   }
 );
 
-export const Account: Model<IAccount> = mongoose.model(
+export const Account: Model<AccountDocument> = mongoose.model(
   'Account',
   AccountSchema
 );

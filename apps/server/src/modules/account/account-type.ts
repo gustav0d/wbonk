@@ -1,6 +1,6 @@
 import { GraphQLNonNull, GraphQLObjectType, GraphQLString } from 'graphql';
 import { connectionDefinitions, globalIdField } from 'graphql-relay';
-import { IAccount } from './account-model';
+import { AccountDocument } from './account-model';
 import { nodeInterface, registerTypeLoader } from '../node/typeRegister';
 import { AccountLoader } from './account-loader';
 import { UserType } from '../user/user-type';
@@ -10,7 +10,7 @@ import {
   timestampResolver,
 } from '@entria/graphql-mongo-helpers';
 
-const AccountType = new GraphQLObjectType<IAccount>({
+const AccountType = new GraphQLObjectType<AccountDocument>({
   name: 'Account',
   description: 'Represents an account with balance',
   fields: () => ({
