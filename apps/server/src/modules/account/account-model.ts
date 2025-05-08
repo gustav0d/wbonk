@@ -19,6 +19,7 @@ const AccountSchema = new mongoose.Schema<IAccount>(
     },
     balance: {
       type: Number,
+      default: 0,
       description: 'Balance amount from account',
     },
     user: {

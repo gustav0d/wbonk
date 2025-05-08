@@ -8,6 +8,9 @@ interface Dataloaders {
   UserLoader: ReturnType<
     typeof import('../user/user-loader').UserLoader.getLoader
   >;
+  LedgerLoader: ReturnType<
+    typeof import('../ledger/ledger-loader').LedgerLoader.getLoader
+  >;
 }
 
 type Loaders =

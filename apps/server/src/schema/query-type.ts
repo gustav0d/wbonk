@@ -11,6 +11,8 @@ import { TransactionType } from '@/modules/transaction/transaction-type';
 import { UserType } from '@/modules/user/user-type';
 import { UserLoader } from '@/modules/user/user-loader';
 import { Account } from '@/modules/account/account-model';
+import { LedgerLoader } from '@/modules/ledger/ledger-loader';
+import { LedgerType } from '@/modules/ledger/ledger-type';
 
 export const QueryType = new GraphQLObjectType({
   name: 'Query',
@@ -85,6 +87,28 @@ export const QueryType = new GraphQLObjectType({
         return await TransactionLoader.loadAll(
           context,
           withFilter(args, { originAccount: currentUserAccount._id })
+        );
+      },
+    },
+    ledgerEntries: {
+      type: LedgerType,
+      args: {
+        ...connectionArgs,
+      },
+      resolve: async (_, args, context: GraphQLContext) => {
+        if (!context.user) {
+          throw new Error('Unauthorized');
+        }
+
+        const currentUserAccount = await Account.findOne({
+          user: context.user._id,
+        });
+
+        if (!currentUserAccount) return null;
+
+        return await LedgerLoader.loadAll(
+          context,
+          withFilter(args, { accountId: currentUserAccount._id })
         );
       },
     },

@@ -6,7 +6,10 @@
     "config:local": "cp .env.example .env",
     "dev": "tsx watch src/index.ts",
     "build": "tsc",
-    "serve": "node dist/src/index.js"
+    "serve": "node dist/src/index.js",
+    "db:seed": "pnpm run db:seed:user && pnpm run db:seed:transaction",
+    "db:seed:user": "CLI=1 tsx ./src/database/user-seed.ts",
+    "db:seed:transaction": "CLI=1 tsx ./src/database/transaction-seed.ts"
   },
   "dependencies": {
     "@entria/graphql-mongo-helpers": "^1.1.2",
