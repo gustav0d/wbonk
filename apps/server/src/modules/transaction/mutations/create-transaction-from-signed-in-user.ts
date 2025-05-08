@@ -32,9 +32,8 @@ const CreateTransactionFromSignedInUserMutation = mutationWithClientMutationId({
       type: new GraphQLNonNull(GraphQLString),
     },
     idempotencyKey: {
-      type: GraphQLString,
-      description:
-        'Unique key to prevent duplicate transactions. If not provided, one will be generated.',
+      type: new GraphQLNonNull(GraphQLString),
+      description: 'Unique key to prevent duplicate transactions.',
     },
   },
   mutateAndGetPayload: async (
@@ -124,6 +123,7 @@ const CreateTransactionFromSignedInUserMutation = mutationWithClientMutationId({
       }),
     ]);
 
+    // determine the last known balances for both accounts from their respective ledgers
     const originLastBalance = originLedger
       ? originLedger.balance
       : originAccount.balance + amount;
