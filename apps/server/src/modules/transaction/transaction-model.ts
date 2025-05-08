@@ -10,7 +10,7 @@ export type TransactionModel = {
   originAccount: Types.ObjectId;
   receiverAccount: Types.ObjectId;
   status: TransactionStatus;
-  type: TransactionType;
+  paymentType: TransactionType;
   createdAt: Date;
   updatedAt: Date | null;
   idempotencyKey: string;
@@ -25,7 +25,7 @@ const TransactionSchema = new mongoose.Schema<TransactionModel>(
       enum: ['PENDING', 'PAID', 'FAILED'],
       description: 'Status from transaction: "PENDING", "FAILED" or "PAID"',
     },
-    type: {
+    paymentType: {
       type: String,
       enum: ['PIX', 'CREDIT', 'DEBIT'],
       description: 'Type of operation "PIX", "CREDIT" or "DEBIT"',

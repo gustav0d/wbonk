@@ -36,9 +36,9 @@ const TransactionType = new GraphQLObjectType<TransactionModel>({
       type: GraphQLString,
       resolve: (transaction) => transaction.status,
     },
-    type: {
+    paymentType: {
       type: GraphQLString,
-      resolve: (transaction) => transaction.type,
+      resolve: (transaction) => transaction.paymentType,
     },
     ...objectIdResolver,
     ...timestampResolver,
