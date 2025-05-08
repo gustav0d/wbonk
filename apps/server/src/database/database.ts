@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-import { config } from './config';
+import { config } from '../config';
 
 async function connectDatabase() {
   // eslint-disable-next-line

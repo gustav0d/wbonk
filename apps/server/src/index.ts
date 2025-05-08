@@ -2,7 +2,7 @@ import http from 'node:http';
 
 import { config } from '@/config';
 import { app } from '@/server/app';
-import { connectDatabase } from './database';
+import { connectDatabase } from './database/database';
 
 (async () => {
   await connectDatabase();
