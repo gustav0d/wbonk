@@ -9,7 +9,8 @@ interface NewUserArgs {
 }
 
 function validateUserName(name: string) {
-  return validator.isAlphanumeric(name);
+  return true; // no name validations for now
+  // return validator.isAlphanumeric(name);
 }
 
 function validateAndSanitizeNewUser(args: NewUserArgs) {
