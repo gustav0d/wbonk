@@ -317,4 +317,49 @@ describe('CreateTransactionMutation', () => {
       'receiverAccountId does not exist'
     );
   });
+
+  it('should reject transaction when user is not authenticated', async () => {
+    // Setup test accounts
+    const accounts = await getTestAccounts();
+    const receiverAccount = accounts[1];
+
+    const transferAmount = 1000; // $10.00
+
+    const mutation = gql`
+      mutation CreateTransaction($input: CreateTransactionInput!) {
+        createTransaction(input: $input) {
+          success
+          transaction {
+            id
+          }
+          error {
+            field
+            message
+          }
+        }
+      }
+    `;
+
+    const variables = {
+      input: {
+        amount: transferAmount,
+        receiverAccountId: receiverAccount._id.toString(),
+        idempotencyKey: `test-transaction-${generateUniqueIntId()}`,
+        clientMutationId: '1',
+      },
+    };
+
+    // No auth token is provided in this request
+
+    const app = await setupTestApp();
+    const result = await request(app.callback())
+      .query(mutation)
+      .variables(variables)
+      .end();
+
+    // Should have an error since no auth token was provided
+    expect(result.errors).toBeDefined();
+    expect(result.errors?.[0].message).toBe('Unauthorized');
+    expect((result.data as any)?.createTransaction).toBeNull();
+  });
 });
