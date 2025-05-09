@@ -9,11 +9,14 @@ import { schema } from '@/schema/schema';
 import { getContext } from '@/getContext';
 import { GraphQLError } from 'graphql';
 import { getUser } from '@/auth';
+import { config, logEnvironments } from '@/config';
 
 const app = new Koa();
 
 app.use(cors({ origin: '*' }));
-app.use(KoaLogger());
+if (logEnvironments.includes(config.NODE_ENV)) {
+  app.use(KoaLogger());
+}
 app.use(
   bodyParser({
     onerror(err, ctx) {
@@ -38,13 +41,14 @@ const graphqlSettingsPerReq = async (
       user,
     }),
     customFormatErrorFn: (error: GraphQLError) => {
-      // eslint-disable-next-line
-      console.log(error.message);
-      // eslint-disable-next-line
-      console.log(error.locations);
-      // eslint-disable-next-line
-      console.log(error.stack);
-
+      if (logEnvironments.includes(config.NODE_ENV)) {
+        // eslint-disable-next-line
+        console.log(error.message);
+        // eslint-disable-next-line
+        console.log(error.locations);
+        // eslint-disable-next-line
+        console.log(error.stack);
+      }
       return {
         message: error.message,
         locations: error.locations,

@@ -1,6 +1,6 @@
 import http from 'node:http';
 
-import { config } from './config';
+import { config, logEnvironments } from './config';
 import { app } from './server/app';
 
 import { connectDatabase } from './database/database';
@@ -11,9 +11,7 @@ import { runTransactionSeeds } from './database/transaction-seed';
   await connectDatabase();
 
   // run seeds on the following environments
-  if (
-    ['production', 'development', 'prod', 'dev'].includes(process.env.NODE_ENV!)
-  ) {
+  if (logEnvironments.includes(config.NODE_ENV)) {
     await runUserSeeds();
     await runTransactionSeeds();
   }
