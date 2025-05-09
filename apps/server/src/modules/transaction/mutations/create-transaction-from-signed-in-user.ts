@@ -69,7 +69,10 @@ const CreateTransactionFromSignedInUserMutation = mutationWithClientMutationId({
     if (!originAccount) {
       // this will probably never happen because ctx.user
       // is fetched on each request (as in app.ts in getUser)
-      throw new Error('Origin account does not exist');
+      return {
+        ...fieldError('originAccountId', 'originAccountId does not exist'),
+        success: false,
+      };
     }
 
     if (!receiverAccount) {
