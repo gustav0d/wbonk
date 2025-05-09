@@ -10,9 +10,9 @@
     "db:seed": "pnpm run db:seed:user && pnpm run db:seed:transaction",
     "db:seed:user": "CLI=1 tsx ./src/database/user-seed.ts",
     "db:seed:transaction": "CLI=1 tsx ./src/database/transaction-seed.ts",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage"
+    "test": "set NODE_ENV=test && jest",
+    "test:watch": "pnpm run test --watch",
+    "test:coverage": "pnpm run test --coverage"
   },
   "dependencies": {
     "@entria/graphql-mongo-helpers": "^1.1.2",
