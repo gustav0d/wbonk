@@ -49,6 +49,7 @@
     "@wbonk/typescript-config": "workspace:*",
     "jest": "^29.7.0",
     "jest-environment-node": "^29.7.0",
+    "supertest-graphql": "^1.1.4",
     "ts-jest": "^29.3.2",
     "tsx": "^4.15.7",
     "typescript": "^5.5.2"
