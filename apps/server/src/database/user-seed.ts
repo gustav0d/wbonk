@@ -35,7 +35,7 @@ const usersAlreadyExist = async (
   }
 };
 
-export const runSeeds = async () => {
+export const runUserSeeds = async () => {
   await connectDatabase();
 
   console.log('Checking if seed data already exists...');
@@ -55,13 +55,13 @@ export const runSeeds = async () => {
   try {
     // Create users
     const user1 = new UserModel({
-      name: 'Test User One',
+      name: 'TestUserOne',
       email: user1Email,
       password: 'password123',
     });
 
     const user2 = new UserModel({
-      name: 'Test User Two',
+      name: 'TestUserTwo',
       email: user2Email,
       password: 'password456',
     });
@@ -107,7 +107,7 @@ export const runSeeds = async () => {
 
 // Run seeds if called directly
 if (require.main === module) {
-  runSeeds()
+  runUserSeeds()
     .then(() => process.exit(0))
     .catch((error) => {
       console.error('Seed failed:', error);
