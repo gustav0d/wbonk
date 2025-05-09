@@ -27,6 +27,7 @@ afterEach(async () => {
 
 afterAll(() => {
   if (!mongod) return;
+  disconnectMongoose(connection);
   mongod.stop();
   mongod = null;
 });
