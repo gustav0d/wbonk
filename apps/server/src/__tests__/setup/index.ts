@@ -1,5 +1,5 @@
 import type MongoMemoryServer from 'mongodb-memory-server-core';
-import type mongoose from 'mongoose';
+import mongoose from 'mongoose';
 import { afterAll, afterEach, beforeAll, beforeEach } from '@jest/globals';
 import { clearDbAndRestartCounters } from './mongodb/clearDatabase';
 import { connectMongoose } from './mongodb/connectMemoryDb';
@@ -22,8 +22,6 @@ beforeEach(async () => {
 });
 
 afterEach(async () => {
-  console.log('afterEach');
-
   await disconnectMongoose(connection);
 });
 
