@@ -9,16 +9,17 @@ export const startMemoryDb = async () => {
     mongoServer = await MongoMemoryServer.create({
       instance: {
         dbName: name,
+
         storageEngine: 'wiredTiger',
       },
       binary: {
-        version: '4.0.12',
+        version: '6.0.13', // Using a newer version that may have better compatibility
       },
     });
     await mongoServer.ensureInstance();
   }
   global.__MONGO_URI__ = mongoServer.getUri();
-  console.log(name, global.__MONGO_URI__);
+  // console.log(name, global.__MONGO_URI__);
 
   return mongoServer;
 };

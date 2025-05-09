@@ -6,8 +6,12 @@ declare global {
 }
 
 export async function connectMongoose() {
-  return await mongoose.connect(global.__MONGO_URI__, {
-    connectTimeoutMS: 10000,
-    dbName: global.__MONGO_DB_NAME__,
-  });
+  try {
+    return await mongoose.connect(global.__MONGO_URI__, {
+      connectTimeoutMS: 10000,
+      dbName: global.__MONGO_DB_NAME__,
+    });
+  } catch (e) {
+    console.error('Cannot connect to mongoose: ', e);
+  }
 }
