@@ -1,4 +1,9 @@
-import { GraphQLNonNull, GraphQLObjectType, GraphQLString } from 'graphql';
+import {
+  GraphQLInt,
+  GraphQLNonNull,
+  GraphQLObjectType,
+  GraphQLString,
+} from 'graphql';
 import { connectionDefinitions, globalIdField } from 'graphql-relay';
 import { TransactionModel } from './transaction-model';
 import { nodeInterface, registerTypeLoader } from '../node/typeRegister';
@@ -16,7 +21,7 @@ const TransactionType = new GraphQLObjectType<TransactionModel>({
   fields: () => ({
     id: globalIdField('Transaction'),
     amount: {
-      type: GraphQLString,
+      type: new GraphQLNonNull(GraphQLInt),
       description: 'Total amount of the transaction in cents',
       resolve: (transaction) => transaction.amount,
     },

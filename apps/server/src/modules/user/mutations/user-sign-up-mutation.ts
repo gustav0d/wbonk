@@ -43,7 +43,7 @@ const UserSignUpMutation = mutationWithClientMutationId({
     const isEmailInUse = await UserModel.exists({ email });
 
     if (isEmailInUse) {
-      return { ...fieldError('email', 'Email Already in Use'), success: false };
+      return { ...fieldError('email', 'Email already in use'), success: false };
     }
 
     const user = await new UserModel({

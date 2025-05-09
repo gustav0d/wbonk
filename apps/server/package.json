@@ -9,7 +9,10 @@
     "serve": "node dist/src/index.js",
     "db:seed": "pnpm run db:seed:user && pnpm run db:seed:transaction",
     "db:seed:user": "CLI=1 tsx ./src/database/user-seed.ts",
-    "db:seed:transaction": "CLI=1 tsx ./src/database/transaction-seed.ts"
+    "db:seed:transaction": "CLI=1 tsx ./src/database/transaction-seed.ts",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
   },
   "dependencies": {
     "@entria/graphql-mongo-helpers": "^1.1.2",
@@ -24,12 +27,16 @@
     "koa-graphql": "^0.12.0",
     "koa-logger": "^3.2.1",
     "koa-router": "^12.0.1",
+    "mongodb-memory-server": "^10.1.4",
+    "mongodb-memory-server-core": "^10.1.4",
     "mongoose": "^8.4.4",
+    "secure-random": "^1.1.2",
     "uuid": "^11.1.0",
     "validator": "^13.15.0"
   },
   "devDependencies": {
     "@types/dotenv-safe": "^8.1.6",
+    "@types/jest": "^29.5.14",
     "@types/jsonwebtoken": "^9.0.9",
     "@types/kcors": "^2.2.8",
     "@types/koa": "^2.15.0",
@@ -37,8 +44,13 @@
     "@types/koa-logger": "^3.1.5",
     "@types/koa-router": "^7.4.8",
     "@types/node": "^20.14.8",
+    "@types/secure-random": "^1.1.3",
     "@types/validator": "^13.15.0",
     "@wbonk/typescript-config": "workspace:*",
+    "jest": "^29.7.0",
+    "jest-environment-node": "^29.7.0",
+    "supertest-graphql": "^1.1.4",
+    "ts-jest": "^29.3.2",
     "tsx": "^4.15.7",
     "typescript": "^5.5.2"
   }
