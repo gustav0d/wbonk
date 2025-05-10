@@ -4,3 +4,8 @@
 # React Router
 /.react-router/
 /build/
+
+# Relay compiler
+!app/__generated__
+app/__generated__/*
+!app/__generated__/.gitkeep
