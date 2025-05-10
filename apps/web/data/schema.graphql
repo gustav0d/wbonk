@@ -1,0 +1,226 @@
+"""Exposes a URL that specifies the behavior of this scalar."""
+directive @specifiedBy(
+  """The URL that specifies the behavior of this scalar."""
+  url: String!
+) on SCALAR
+
+"""
+Indicates exactly one field must be supplied and this field must not be `null`.
+"""
+directive @oneOf on INPUT_OBJECT
+
+"""Represents an account with balance"""
+type Account implements Node {
+  """The ID of an object"""
+  id: ID!
+  accountName: String
+  balance: String
+  user: User!
+  deletedAt: String
+
+  """mongoose _id"""
+  _id: String!
+  createdAt: String
+  updatedAt: String
+}
+
+input CreateTransactionInput {
+  amount: Int!
+  receiverAccountId: String!
+
+  """Unique key to prevent duplicate transactions."""
+  idempotencyKey: String!
+  clientMutationId: String
+}
+
+type CreateTransactionPayload {
+  transaction: Transaction
+  originAccountUpdatedBalance: Int
+  error: FieldError
+
+  """Default success field resolver."""
+  success: String
+  clientMutationId: String
+}
+
+"""
+An object containing an error message and the field the error belongs to
+"""
+type FieldError {
+  field: String
+  message: String
+}
+
+"""Represents a ledger entry for financial transactions"""
+type Ledger implements Node {
+  """The ID of an object"""
+  id: ID!
+  description: String
+
+  """Amount of the transaction (positive for credit, negative for debit)"""
+  amount: Int
+
+  """Account balance after this transaction"""
+  balance: Int
+
+  """Type of ledger entry (CREDIT or DEBIT)"""
+  transactionType: String
+
+  """The transaction associated with this ledger entry"""
+  transaction: Transaction
+
+  """The account associated with this ledger entry"""
+  account: User
+
+  """mongoose _id"""
+  _id: String!
+  createdAt: String
+  updatedAt: String
+}
+
+type Mutation {
+  userSignUp(input: UserSignUpMutationInput!): UserSignUpMutationPayload
+  userSignIn(input: UserSignInMutationInput!): UserSignInMutationPayload
+  createTransaction(input: CreateTransactionInput!): CreateTransactionPayload
+}
+
+"""An object with an ID"""
+interface Node {
+  """The id of the object."""
+  id: ID!
+}
+
+"""Queries"""
+type Query {
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
+
+  """Fetches objects given their IDs"""
+  nodes(
+    """The IDs of objects"""
+    ids: [ID!]!
+  ): [Node]!
+  me: User
+  myAccount: Account
+  users(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String
+
+    """Returns the first n items from the list."""
+    first: Int
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String
+
+    """Returns the last n items from the list."""
+    last: Int
+  ): User
+  accounts(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String
+
+    """Returns the first n items from the list."""
+    first: Int
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String
+
+    """Returns the last n items from the list."""
+    last: Int
+  ): Account
+  transactions(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String
+
+    """Returns the first n items from the list."""
+    first: Int
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String
+
+    """Returns the last n items from the list."""
+    last: Int
+  ): Transaction
+  ledgerEntries(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String
+
+    """Returns the first n items from the list."""
+    first: Int
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String
+
+    """Returns the last n items from the list."""
+    last: Int
+  ): Ledger
+}
+
+"""Represents a transaction"""
+type Transaction implements Node {
+  """The ID of an object"""
+  id: ID!
+
+  """Total amount of the transaction in cents"""
+  amount: Int!
+  originAccount: User!
+  receiverAccount: User!
+  status: String
+  paymentType: String
+
+  """mongoose _id"""
+  _id: String!
+  createdAt: String
+  updatedAt: String
+}
+
+"""Represents a user"""
+type User implements Node {
+  """The ID of an object"""
+  id: ID!
+  name: String
+  email: String
+
+  """mongoose _id"""
+  _id: String!
+  createdAt: String
+  updatedAt: String
+}
+
+input UserSignInMutationInput {
+  email: String!
+  password: String!
+  clientMutationId: String
+}
+
+type UserSignInMutationPayload {
+  me: User
+  token: String
+  error: FieldError
+
+  """Default success field resolver."""
+  success: String
+  clientMutationId: String
+}
+
+input UserSignUpMutationInput {
+  name: String!
+  email: String!
+  password: String!
+  clientMutationId: String
+}
+
+type UserSignUpMutationPayload {
+  me: User
+  account: Account
+  token: String
+  error: FieldError
+
+  """Default success field resolver."""
+  success: String
+  clientMutationId: String
+}
+

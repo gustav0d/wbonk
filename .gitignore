@@ -39,3 +39,8 @@ yarn-error.log*
 
 # Notes (for now)
 notes.md
+
+# Relay compiler
+!__generated__
+__generated__/*
+!__generated__/.gitkeep
