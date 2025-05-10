@@ -50,13 +50,11 @@ export const QueryType = new GraphQLObjectType({
         ...connectionArgs,
       },
       resolve: async (_, args, context: GraphQLContext) => {
-        if (!context.user) {
-          throw new Error('Unauthorized');
-        }
-
         return await UserLoader.loadAll(
           context,
-          withFilter(args, { _id: { $ne: context.user._id } })
+          context.user
+            ? withFilter(args, { _id: { $ne: context.user._id } })
+            : args
         );
       },
     },
