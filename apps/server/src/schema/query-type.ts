@@ -67,9 +67,16 @@ export const QueryType = new GraphQLObjectType({
           throw new Error('Unauthorized');
         }
 
+        const account = await Account.findOne({ user: context.user._id });
+
         return await TransactionLoader.loadAll(
           context,
-          withFilter(args, { originAccount: context.user._id })
+          withFilter(args, {
+            $or: [
+              { originAccount: account?._id },
+              { receiverAccount: account?._id },
+            ],
+          })
         );
       },
     },
