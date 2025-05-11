@@ -4,11 +4,12 @@ import {
   GraphQLObjectType,
   GraphQLString,
 } from 'graphql';
-import { connectionDefinitions, globalIdField } from 'graphql-relay';
+import { globalIdField } from 'graphql-relay';
 import { TransactionModel } from './transaction-model';
 import { nodeInterface, registerTypeLoader } from '../node/typeRegister';
 import { TransactionLoader } from './transaction-loader';
 import {
+  connectionDefinitions,
   objectIdResolver,
   timestampResolver,
 } from '@entria/graphql-mongo-helpers';

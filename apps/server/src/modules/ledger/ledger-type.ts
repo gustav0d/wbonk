@@ -4,8 +4,9 @@ import {
   GraphQLString,
   GraphQLInt,
 } from 'graphql';
-import { connectionDefinitions, globalIdField } from 'graphql-relay';
+import { globalIdField } from 'graphql-relay';
 import {
+  connectionDefinitions,
   objectIdResolver,
   timestampResolver,
 } from '@entria/graphql-mongo-helpers';
