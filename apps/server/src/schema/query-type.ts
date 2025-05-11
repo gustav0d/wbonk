@@ -49,8 +49,10 @@ export const QueryType = new GraphQLObjectType({
         ...connectionArgs,
       },
       resolve: async (_, args, context: GraphQLContext) => {
+        // withFilter builds the condition filter like this: [field]_[operator]
+        // from: https://github.com/woovibr/graphql-mongo-helpers/blob/main/src/buildMongoConditionsFromFilters.ts
         const argsOrArgsWithFilter = context.user
-          ? withFilter(args, { _id: { $ne: context.user._id } })
+          ? withFilter(args, { _id_ne: context.user._id })
           : args;
         return await UserLoader.loadAll(context, argsOrArgsWithFilter);
       },
