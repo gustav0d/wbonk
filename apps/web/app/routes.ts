@@ -15,6 +15,10 @@ export default [
   ]),
 
   ...prefix('dashboard', [
-    layout('./dashboard/layout.tsx', [index('./dashboard/home.tsx')]),
+    layout('./dashboard/layout.tsx', [
+      index('./dashboard/home.tsx'),
+      route('new-transaction', './dashboard/new-transaction.tsx'),
+      route('account', './dashboard/user-account.tsx'),
+    ]),
   ]),
 ] satisfies RouteConfig;
