@@ -9,6 +9,7 @@ const userListQuery = graphql`
       edges {
         cursor
         node {
+          id
           ...userListItem
         }
       }
@@ -27,7 +28,10 @@ export function UserList() {
         <ul>
           {edges.length > 0 ? (
             edges.map((edge) => {
-              if (edge.node) return <UserListItem key={edge.id} user={edge} />;
+              if (!edge.node) {
+                return null;
+              }
+              return <UserListItem key={edge.node.id} user={edge.node} />;
             })
           ) : (
             <li>No users found</li>
