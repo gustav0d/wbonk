@@ -13,8 +13,8 @@ import {
   objectIdResolver,
   timestampResolver,
 } from '@entria/graphql-mongo-helpers';
-import { UserType } from '../user/user-type';
-import { UserLoader } from '../user/user-loader';
+import { AccountType } from '../account/account-type';
+import { AccountLoader } from '../account/account-loader';
 
 const TransactionType = new GraphQLObjectType<TransactionModel>({
   name: 'Transaction',
@@ -27,15 +27,15 @@ const TransactionType = new GraphQLObjectType<TransactionModel>({
       resolve: (transaction) => transaction.amount,
     },
     originAccount: {
-      type: new GraphQLNonNull(UserType),
+      type: AccountType,
       resolve: async (transaction, _, ctx) => {
-        return UserLoader.load(ctx, transaction.originAccount);
+        return await AccountLoader.load(ctx, transaction.originAccount);
       },
     },
     receiverAccount: {
-      type: new GraphQLNonNull(UserType),
+      type: AccountType,
       resolve: async (transaction, _, ctx) => {
-        return UserLoader.load(ctx, transaction.receiverAccount);
+        return await AccountLoader.load(ctx, transaction.receiverAccount);
       },
     },
     status: {

@@ -1,4 +1,4 @@
-import { Outlet, Link, Navigate } from 'react-router';
+import { Outlet, NavLink, Navigate } from 'react-router';
 import { getToken, useLogout } from '~/auth/security';
 import { Button } from '~/components/ui/button';
 import { TypographyH2 } from '~/components/ui/typography/h2';
@@ -17,27 +17,31 @@ export default function DashboardLayout() {
         <header className="flex flex-col items-center gap-9 w-full">
           <div className="w-screen max-w-[100vw] p-4 flex justify-between items-center">
             <TypographyH2>wbonk</TypographyH2>
-            <nav className="flex items-center gap-4">
-              <Link to="/dashboard" className="hover:underline font-medium">
-                Dashboard
-              </Link>
-              <Link
-                to="/dashboard/transactions"
-                className="hover:underline font-medium"
+            <nav className="flex items-center gap-4 font-medium">
+              <NavLink
+                to="/dashboard"
+                className={({ isActive }) => (isActive ? 'underline' : '')}
+                end
               >
-                Transactions
-              </Link>
-              <Link
+                Dashboard
+              </NavLink>
+              <NavLink
+                to="/dashboard/new-transaction"
+                className={({ isActive }) => (isActive ? 'underline' : '')}
+              >
+                New transaction
+              </NavLink>
+              <NavLink
                 to="/dashboard/account"
-                className="hover:underline font-medium"
+                className={({ isActive }) => (isActive ? 'underline' : '')}
               >
                 Account
-              </Link>
+              </NavLink>
               <Button onClick={logout}>Log out</Button>
             </nav>
           </div>
         </header>
-        <main className="max-w-[300px] w-full space-y-6 px-4">
+        <main className="max-w-[900px] w-full space-y-6 px-4">
           <Outlet />
         </main>
       </div>

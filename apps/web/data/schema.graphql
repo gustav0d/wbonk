@@ -25,6 +25,41 @@ type Account implements Node {
 }
 
 """A connection to a list of items."""
+type AccountConnection implements Connection {
+  """Number of items in this connection."""
+  count: Int
+
+  """
+  A count of the total number of objects in this connection, ignoring pagination.
+  This allows a client to fetch the first five objects by passing "5" as the
+  argument to "first", then fetch the total count so it could display "5 of 83",
+  for example.
+  """
+  totalCount: Int
+
+  """Offset from start."""
+  startCursorOffset: Int!
+
+  """Offset till end."""
+  endCursorOffset: Int!
+
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [AccountEdge]!
+}
+
+"""An edge in a connection."""
+type AccountEdge {
+  """The item at the end of the edge."""
+  node: Account
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+"""A connection to a list of items."""
 interface Connection {
   """Number of items in this connection."""
   count: Int
@@ -101,6 +136,41 @@ type Ledger implements Node {
   updatedAt: String
 }
 
+"""A connection to a list of items."""
+type LedgerConnection implements Connection {
+  """Number of items in this connection."""
+  count: Int
+
+  """
+  A count of the total number of objects in this connection, ignoring pagination.
+  This allows a client to fetch the first five objects by passing "5" as the
+  argument to "first", then fetch the total count so it could display "5 of 83",
+  for example.
+  """
+  totalCount: Int
+
+  """Offset from start."""
+  startCursorOffset: Int!
+
+  """Offset till end."""
+  endCursorOffset: Int!
+
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [LedgerEdge]!
+}
+
+"""An edge in a connection."""
+type LedgerEdge {
+  """The item at the end of the edge."""
+  node: Ledger
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
 type Mutation {
   userSignUp(input: UserSignUpMutationInput!): UserSignUpMutationPayload
   userSignIn(input: UserSignInMutationInput!): UserSignInMutationPayload
@@ -143,10 +213,10 @@ type Query {
   ): [Node]!
   me: User
   myAccount: Account
-  users(after: String, first: Int, before: String, last: Int): UserConnection!
-  accounts(after: String, first: Int, before: String, last: Int): Account
-  transactions(after: String, first: Int, before: String, last: Int): Transaction
-  ledgerEntries(after: String, first: Int, before: String, last: Int): Ledger
+  users(after: String, first: Int, before: String, last: Int): UserConnection
+  accounts(after: String, first: Int, before: String, last: Int): AccountConnection
+  transactions(after: String, first: Int, before: String, last: Int): TransactionConnection
+  ledgerEntries(after: String, first: Int, before: String, last: Int): LedgerConnection
 }
 
 """Represents a transaction"""
@@ -156,8 +226,8 @@ type Transaction implements Node {
 
   """Total amount of the transaction in cents"""
   amount: Int!
-  originAccount: User!
-  receiverAccount: User!
+  originAccount: Account
+  receiverAccount: Account
   status: String
   paymentType: String
 
@@ -165,6 +235,41 @@ type Transaction implements Node {
   _id: String!
   createdAt: String
   updatedAt: String
+}
+
+"""A connection to a list of items."""
+type TransactionConnection implements Connection {
+  """Number of items in this connection."""
+  count: Int
+
+  """
+  A count of the total number of objects in this connection, ignoring pagination.
+  This allows a client to fetch the first five objects by passing "5" as the
+  argument to "first", then fetch the total count so it could display "5 of 83",
+  for example.
+  """
+  totalCount: Int
+
+  """Offset from start."""
+  startCursorOffset: Int!
+
+  """Offset till end."""
+  endCursorOffset: Int!
+
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [TransactionEdge]!
+}
+
+"""An edge in a connection."""
+type TransactionEdge {
+  """The item at the end of the edge."""
+  node: Transaction
+
+  """A cursor for use in pagination."""
+  cursor: String!
 }
 
 """Represents a user"""
