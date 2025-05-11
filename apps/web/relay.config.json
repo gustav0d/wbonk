@@ -8,5 +8,6 @@
     "**/__mocks__/**",
     "**/__generated__/**"
   ],
-  "language": "typescript"
+  "language": "typescript",
+  "eagerEsModules": true
 }

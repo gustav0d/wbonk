@@ -3,6 +3,7 @@ import type { Route } from './+types/home';
 import { TypographyH2 } from '~/components/ui/typography/h2';
 import { Button } from '~/components/ui/button';
 import { Link } from 'react-router';
+import { UserList } from './user-list/user-list';
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -35,6 +36,7 @@ export default function Home() {
               </Link>
             </div>
           </nav>
+          <UserList />
         </div>
       </div>
     </main>

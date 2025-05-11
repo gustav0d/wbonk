@@ -1,43 +1,42 @@
 import {
+  Network,
+  QueryResponseCache,
   type CacheConfig,
   type ConcreteRequest,
   type RequestParameters,
   type Variables,
-  Network,
-  QueryResponseCache,
 } from 'relay-runtime';
+import { getToken } from '~/auth/security';
 
 const ONE_MINUTE_IN_MS = 60 * 1000;
 
 function createNetwork() {
-  const responseCache = new QueryResponseCache({
-    size: 100,
-    ttl: ONE_MINUTE_IN_MS,
-  });
+  // const responseCache = new QueryResponseCache({
+  //   size: 100,
+  //   ttl: ONE_MINUTE_IN_MS,
+  // });
 
-  async function fetchResponse(
-    operation: RequestParameters,
-    variables: Variables,
-    cacheConfig: CacheConfig
-  ) {
-    const { id } = operation;
+  // async function fetchResponse(
+  //   operation: RequestParameters,
+  //   variables: Variables,
+  //   cacheConfig: CacheConfig
+  // ) {
+  //   const { id } = operation;
 
-    const isQuery = operation.operationKind === 'query';
-    const forceFetch = cacheConfig && cacheConfig.force;
+  //   const isQuery = operation.operationKind === 'query';
+  //   const forceFetch = cacheConfig && cacheConfig.force;
 
-    if (isQuery && id && !forceFetch) {
-      const fromCache = responseCache.get(id, variables);
-      if (fromCache != null) {
-        return Promise.resolve(fromCache);
-      }
-    }
+  //   if (isQuery && !forceFetch) {
+  //     const fromCache = responseCache.get(String(id), variables);
+  //     if (fromCache != null) {
+  //       return Promise.resolve(fromCache);
+  //     }
+  //   }
 
-    return networkFetch(operation, variables);
-  }
+  //   return networkFetch(operation, variables);
+  // }
 
-  const network = Network.create(fetchResponse);
-  // @ts-ignore Private API Hackery? 🤷‍♂️
-  network.responseCache = responseCache;
+  const network = Network.create(networkFetch);
   return network;
 }
 /**
@@ -47,19 +46,17 @@ function createNetwork() {
  */
 
 // dev: http://127.0.0.1:3001/graphql
-const GRAPHQL_ENPOINT = import.meta.env.VITE_GRAPHQL_API_ENDPOINT as string;
+const GRAPHQL_ENDPOINT = import.meta.env.VITE_GRAPHQL_API_ENDPOINT;
 
-async function networkFetch(
-  params: RequestParameters,
-  variables: Variables,
-  headers?: HeadersInit
-) {
-  const response = await fetch(GRAPHQL_ENPOINT, {
+async function networkFetch(params: RequestParameters, variables: Variables) {
+  const authToken = getToken();
+  const authorization = authToken ? `Bearer ${authToken}` : '';
+  const response = await fetch(GRAPHQL_ENDPOINT, {
     method: 'POST',
-    credentials: 'include',
     headers: {
+      'Access-Control-Allow-Origin': '*',
       'Content-Type': 'application/json',
-      ...headers,
+      authorization,
     },
     body: JSON.stringify({
       query: params.text,
@@ -85,17 +82,19 @@ async function networkFetch(
   return json;
 }
 
-async function getPreloadedQuery(
-  { params }: ConcreteRequest,
-  variables: Variables,
-  headers?: HeadersInit
-) {
-  const response = await networkFetch(params, variables, headers);
-  return {
-    params,
-    variables,
-    response,
-  };
-}
+// async function getPreloadedQuery(
+//   { params }: ConcreteRequest,
+//   variables: Variables
+// ) {
+//   const response = await networkFetch(params, variables);
+//   return {
+//     params,
+//     variables,
+//     response,
+//   };
+// }
 
-export { createNetwork, getPreloadedQuery };
+export {
+  createNetwork,
+  // getPreloadedQuery
+};

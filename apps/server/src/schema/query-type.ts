@@ -1,6 +1,10 @@
-import { GraphQLInt, GraphQLObjectType, GraphQLString } from 'graphql';
-import { connectionArgs } from 'graphql-relay';
-import { withFilter } from '@entria/graphql-mongo-helpers';
+import {
+  GraphQLInt,
+  GraphQLNonNull,
+  GraphQLObjectType,
+  GraphQLString,
+} from 'graphql';
+import { connectionArgs, withFilter } from '@entria/graphql-mongo-helpers';
 
 import { GraphQLContext } from '@/graphql/context';
 import { nodeField, nodesField } from '@/modules/node/typeRegister';
@@ -8,7 +12,7 @@ import { AccountLoader } from '@/modules/account/account-loader';
 import { AccountType } from '@/modules/account/account-type';
 import { TransactionLoader } from '@/modules/transaction/transaction-loader';
 import { TransactionType } from '@/modules/transaction/transaction-type';
-import { UserType } from '@/modules/user/user-type';
+import { UserConnection, UserType } from '@/modules/user/user-type';
 import { UserLoader } from '@/modules/user/user-loader';
 import { Account } from '@/modules/account/account-model';
 import { LedgerLoader } from '@/modules/ledger/ledger-loader';
@@ -45,17 +49,15 @@ export const QueryType = new GraphQLObjectType({
       },
     },
     users: {
-      type: UserType,
+      type: new GraphQLNonNull(UserConnection.connectionType),
       args: {
         ...connectionArgs,
       },
       resolve: async (_, args, context: GraphQLContext) => {
-        return await UserLoader.loadAll(
-          context,
-          context.user
-            ? withFilter(args, { _id: { $ne: context.user._id } })
-            : args
-        );
+        const argsOrArgsWithFilter = context.user
+          ? withFilter(args, { _id: { $ne: context.user._id } })
+          : args;
+        return await UserLoader.loadAll(context, args);
       },
     },
     accounts: {

@@ -19,9 +19,6 @@ function createEnvironment() {
     },
   });
 
-  // @ts-ignore Private API Hackery? 🤷‍♂️
-  environment.getNetwork().responseCache = network.responseCache;
-
   return environment;
 }
 
