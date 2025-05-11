@@ -26,7 +26,7 @@ export default function DashboardLayout() {
                 Dashboard
               </NavLink>
               <NavLink
-                to="/dashboard/new-transaction"
+                to="/dashboard/create-transaction"
                 className={({ isActive }) => (isActive ? 'underline' : '')}
               >
                 New transaction
