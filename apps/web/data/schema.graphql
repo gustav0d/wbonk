@@ -190,8 +190,8 @@ type Transaction implements Node {
 
   """Total amount of the transaction in cents"""
   amount: Int!
-  originAccount: User!
-  receiverAccount: User!
+  originAccount: Account
+  receiverAccount: Account
   status: String
   paymentType: String
 
