@@ -17,7 +17,10 @@ export default [
   ...prefix('dashboard', [
     layout('./dashboard/layout.tsx', [
       index('./dashboard/home.tsx'),
-      route('new-transaction', './dashboard/new-transaction.tsx'),
+      route(
+        'create-transaction',
+        './dashboard/create-transaction/create-transaction.tsx'
+      ),
       route('account', './dashboard/user-account.tsx'),
     ]),
   ]),
