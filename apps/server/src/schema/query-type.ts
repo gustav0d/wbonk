@@ -57,6 +57,20 @@ export const QueryType = new GraphQLObjectType({
         return await UserLoader.loadAll(context, argsOrArgsWithFilter);
       },
     },
+    accounts: {
+      type: AccountConnection.connectionType,
+      args: connectionArgs,
+      resolve: async (_, args, context: GraphQLContext) => {
+        if (!context.user) {
+          throw new Error('Unauthorized');
+        }
+
+        return await AccountLoader.loadAll(
+          context,
+          withFilter(args, { user_ne: context.user._id })
+        );
+      },
+    },
     transactions: {
       type: TransactionConnection.connectionType,
       args: {
