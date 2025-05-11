@@ -11,39 +11,41 @@ import { getToken } from '~/auth/security';
 const ONE_MINUTE_IN_MS = 60 * 1000;
 
 function createNetwork() {
-  // const responseCache = new QueryResponseCache({
-  //   size: 100,
-  //   ttl: ONE_MINUTE_IN_MS,
-  // });
+  const responseCache = new QueryResponseCache({
+    size: 100,
+    ttl: ONE_MINUTE_IN_MS,
+  });
 
-  // async function fetchResponse(
-  //   operation: RequestParameters,
-  //   variables: Variables,
-  //   cacheConfig: CacheConfig
-  // ) {
-  //   const { id } = operation;
+  async function fetchResponse(
+    operation: RequestParameters,
+    variables: Variables,
+    cacheConfig: CacheConfig
+  ) {
+    const { id } = operation;
 
-  //   const isQuery = operation.operationKind === 'query';
-  //   const forceFetch = cacheConfig && cacheConfig.force;
+    const isQuery = operation.operationKind === 'query';
+    const forceFetch = cacheConfig && cacheConfig.force;
 
-  //   if (isQuery && !forceFetch) {
-  //     const fromCache = responseCache.get(String(id), variables);
-  //     if (fromCache != null) {
-  //       return Promise.resolve(fromCache);
-  //     }
-  //   }
+    if (isQuery && !forceFetch && id) {
+      const fromCache = responseCache.get(id, variables);
+      if (fromCache != null) {
+        return Promise.resolve(fromCache);
+      }
+    }
 
-  //   return networkFetch(operation, variables);
-  // }
+    const response = await networkFetch(operation, variables);
 
-  const network = Network.create(networkFetch);
+    if (isQuery && id) {
+      responseCache.set(id, variables, response);
+    }
+
+    return response;
+  }
+
+  // Use fetchResponse instead of networkFetch to enable caching
+  const network = Network.create(fetchResponse);
   return network;
 }
-/**
- * Relay requires developers to configure a "fetch" function that tells Relay how to load
- * the results of GraphQL queries from your server (or other data source). See more at
- * https://relay.dev/docs/en/quick-start-guide#relay-environment.
- */
 
 // dev: http://127.0.0.1:3001/graphql
 const GRAPHQL_ENDPOINT = import.meta.env.VITE_GRAPHQL_API_ENDPOINT;
@@ -82,19 +84,16 @@ async function networkFetch(params: RequestParameters, variables: Variables) {
   return json;
 }
 
-// async function getPreloadedQuery(
-//   { params }: ConcreteRequest,
-//   variables: Variables
-// ) {
-//   const response = await networkFetch(params, variables);
-//   return {
-//     params,
-//     variables,
-//     response,
-//   };
-// }
+async function getPreloadedQuery(
+  { params }: ConcreteRequest,
+  variables: Variables
+) {
+  const response = await networkFetch(params, variables);
+  return {
+    params,
+    variables,
+    response,
+  };
+}
 
-export {
-  createNetwork,
-  // getPreloadedQuery
-};
+export { createNetwork, getPreloadedQuery };
