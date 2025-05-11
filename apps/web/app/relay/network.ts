@@ -24,11 +24,12 @@ function createNetwork() {
     const { id } = operation;
 
     const isQuery = operation.operationKind === 'query';
+    const isMutation = operation.operationKind === 'mutation';
     const forceFetch = cacheConfig && cacheConfig.force;
 
-    if (isQuery && !forceFetch && id) {
+    if (!isMutation && isQuery && !forceFetch && id) {
       const fromCache = responseCache.get(id, variables);
-      if (fromCache != null) {
+      if (!!fromCache) {
         return Promise.resolve(fromCache);
       }
     }
