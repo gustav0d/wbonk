@@ -11,6 +11,7 @@ import type { Route } from './+types/root';
 import './app.css';
 import { RelayEnvironmentProvider } from 'react-relay';
 import { createEnvironment } from './relay/environment';
+import { Suspense, useMemo } from 'react';
 
 export const links: Route.LinksFunction = () => [
   { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
@@ -44,10 +45,14 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  const relayEnvironment = createEnvironment();
+  const environment = useMemo(() => {
+    return createEnvironment();
+  }, []);
   return (
-    <RelayEnvironmentProvider environment={relayEnvironment}>
-      <Outlet />;
+    <RelayEnvironmentProvider environment={environment}>
+      <Suspense fallback="loading">
+        <Outlet />
+      </Suspense>
     </RelayEnvironmentProvider>
   );
 }

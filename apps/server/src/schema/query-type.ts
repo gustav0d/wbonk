@@ -1,22 +1,17 @@
-import {
-  GraphQLInt,
-  GraphQLNonNull,
-  GraphQLObjectType,
-  GraphQLString,
-} from 'graphql';
+import { GraphQLObjectType } from 'graphql';
 import { connectionArgs, withFilter } from '@entria/graphql-mongo-helpers';
 
 import { GraphQLContext } from '@/graphql/context';
 import { nodeField, nodesField } from '@/modules/node/typeRegister';
 import { AccountLoader } from '@/modules/account/account-loader';
-import { AccountType } from '@/modules/account/account-type';
+import { AccountConnection } from '@/modules/account/account-type';
 import { TransactionLoader } from '@/modules/transaction/transaction-loader';
-import { TransactionType } from '@/modules/transaction/transaction-type';
-import { UserConnection, UserType } from '@/modules/user/user-type';
+import { TransactionConnection } from '@/modules/transaction/transaction-type';
+import { UserConnection } from '@/modules/user/user-type';
 import { UserLoader } from '@/modules/user/user-loader';
 import { Account } from '@/modules/account/account-model';
 import { LedgerLoader } from '@/modules/ledger/ledger-loader';
-import { LedgerType } from '@/modules/ledger/ledger-type';
+import { LedgerConnection } from '@/modules/ledger/ledger-type';
 
 export const QueryType = new GraphQLObjectType({
   name: 'Query',
@@ -25,7 +20,7 @@ export const QueryType = new GraphQLObjectType({
     node: nodeField,
     nodes: nodesField,
     me: {
-      type: UserType,
+      type: UserConnection.edgeType,
       resolve: async (_, __, context: GraphQLContext) => {
         if (!context.user) {
           throw new Error('Unauthorized');
@@ -35,7 +30,7 @@ export const QueryType = new GraphQLObjectType({
       },
     },
     myAccount: {
-      type: AccountType,
+      type: AccountConnection.edgeType,
       resolve: async (_, __, context: GraphQLContext) => {
         if (!context.user) {
           throw new Error('Unauthorized');
@@ -49,27 +44,21 @@ export const QueryType = new GraphQLObjectType({
       },
     },
     users: {
-      type: new GraphQLNonNull(UserConnection.connectionType),
+      type: UserConnection.connectionType,
       args: {
         ...connectionArgs,
       },
       resolve: async (_, args, context: GraphQLContext) => {
+        // withFilter builds the condition filter like this: [field]_[operator]
+        // from: https://github.com/woovibr/graphql-mongo-helpers/blob/main/src/buildMongoConditionsFromFilters.ts
         const argsOrArgsWithFilter = context.user
-          ? withFilter(args, { _id: { $ne: context.user._id } })
+          ? withFilter(args, { _id_ne: context.user._id })
           : args;
-        return await UserLoader.loadAll(context, args);
+        return await UserLoader.loadAll(context, argsOrArgsWithFilter);
       },
-    },
-    accounts: {
-      type: AccountType,
-      args: {
-        ...connectionArgs,
-      },
-      resolve: async (_, args, context: GraphQLContext) =>
-        await AccountLoader.loadAll(context, args),
     },
     transactions: {
-      type: TransactionType,
+      type: TransactionConnection.connectionType,
       args: {
         ...connectionArgs,
       },
@@ -78,20 +67,14 @@ export const QueryType = new GraphQLObjectType({
           throw new Error('Unauthorized');
         }
 
-        const currentUserAccount = await Account.findOne({
-          user: context.user._id,
-        });
-
-        if (!currentUserAccount) return null;
-
         return await TransactionLoader.loadAll(
           context,
-          withFilter(args, { originAccount: currentUserAccount._id })
+          withFilter(args, { originAccount: context.user._id })
         );
       },
     },
     ledgerEntries: {
-      type: LedgerType,
+      type: LedgerConnection.connectionType,
       args: {
         ...connectionArgs,
       },
@@ -100,15 +83,9 @@ export const QueryType = new GraphQLObjectType({
           throw new Error('Unauthorized');
         }
 
-        const currentUserAccount = await Account.findOne({
-          user: context.user._id,
-        });
-
-        if (!currentUserAccount) return null;
-
         return await LedgerLoader.loadAll(
           context,
-          withFilter(args, { accountId: currentUserAccount._id })
+          withFilter(args, { accountId: context.user._id })
         );
       },
     },

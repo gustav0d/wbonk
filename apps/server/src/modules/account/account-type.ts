@@ -1,11 +1,12 @@
 import { GraphQLNonNull, GraphQLObjectType, GraphQLString } from 'graphql';
-import { connectionDefinitions, globalIdField } from 'graphql-relay';
+import { globalIdField } from 'graphql-relay';
 import { AccountDocument } from './account-model';
 import { nodeInterface, registerTypeLoader } from '../node/typeRegister';
 import { AccountLoader } from './account-loader';
 import { UserType } from '../user/user-type';
 import { UserLoader } from '../user/user-loader';
 import {
+  connectionDefinitions,
   objectIdResolver,
   timestampResolver,
 } from '@entria/graphql-mongo-helpers';

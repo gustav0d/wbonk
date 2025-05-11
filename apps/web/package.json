@@ -12,6 +12,8 @@
     "get-schema": "get-graphql-schema http://127.0.0.1:3001/graphql > ./data/schema.graphql"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.0.1",
+    "@radix-ui/react-label": "^2.1.6",
     "@radix-ui/react-slot": "^1.2.2",
     "@react-router/node": "^7.5.3",
     "@react-router/serve": "^7.5.3",
@@ -23,11 +25,13 @@
     "lucide-react": "^0.509.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "react-hook-form": "^7.56.3",
     "react-relay": "^19.0.0",
     "react-router": "^7.5.3",
     "relay-runtime": "^19.0.0",
     "tailwind-merge": "^3.2.0",
-    "vite-plugin-relay": "^2.1.0"
+    "vite-plugin-relay": "^2.1.0",
+    "zod": "^3.24.4"
   },
   "devDependencies": {
     "@react-router/dev": "^7.5.3",

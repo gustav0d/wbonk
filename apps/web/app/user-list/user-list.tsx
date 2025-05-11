@@ -9,6 +9,7 @@ const userListQuery = graphql`
       edges {
         cursor
         node {
+          id
           ...userListItem
         }
       }
@@ -17,7 +18,13 @@ const userListQuery = graphql`
 `;
 
 export function UserList() {
-  const data = useLazyLoadQuery<userListQuery>(userListQuery, {});
+  // Use a fetch policy that will check for updated data
+  // This ensures the component will refresh when store is invalidated
+  const data = useLazyLoadQuery<userListQuery>(
+    userListQuery,
+    {},
+    { fetchPolicy: 'store-and-network' }
+  );
 
   const { edges } = data?.users;
   return (
@@ -27,7 +34,10 @@ export function UserList() {
         <ul>
           {edges.length > 0 ? (
             edges.map((edge) => {
-              if (edge.node) return <UserListItem key={edge.id} user={edge} />;
+              if (!edge.node) {
+                return null;
+              }
+              return <UserListItem key={edge.node.id} user={edge.node} />;
             })
           ) : (
             <li>No users found</li>

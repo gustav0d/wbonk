@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { redirect } from 'react-router';
+import { useNavigate } from 'react-router';
 
 export const TOKEN_KEY = 'BEARER_TOKEN';
 
@@ -16,10 +16,11 @@ export const updateToken = (token = '') => {
 };
 
 export const useLogout = () => {
+  const navigate = useNavigate();
   const logout = useCallback(() => {
     updateToken('');
-    redirect('/login');
+    navigate('/');
   }, []);
 
-  return [logout];
+  return logout;
 };

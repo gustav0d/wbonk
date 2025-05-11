@@ -3,8 +3,8 @@ import { Environment, RecordSource, Store } from 'relay-runtime';
 import { createNetwork } from './network';
 
 const IS_SERVER = typeof window === typeof undefined;
-const CLIENT_DEBUG = false;
-const SERVER_DEBUG = false;
+const CLIENT_DEBUG = import.meta.env.DEV;
+const SERVER_DEBUG = import.meta.env.DEV;
 
 function createEnvironment() {
   const network = createNetwork();
