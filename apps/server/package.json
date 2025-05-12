@@ -5,6 +5,7 @@
   "scripts": {
     "config:local": "cp .env.example .env",
     "dev": "tsx watch src/index.ts",
+    "start": "node dist/tsc/index.js",
     "build": "tsc",
     "serve": "node dist/src/index.js",
     "db:seed": "pnpm run db:seed:user && pnpm run db:seed:transaction",
@@ -15,7 +16,7 @@
     "test:coverage": "pnpm run test --coverage"
   },
   "dependencies": {
-    "@wbonk/typescript-config": "@workspace:*",
+    "@wbonk/typescript-config": "workspace:*",
     "@entria/graphql-mongo-helpers": "^1.1.2",
     "bcryptjs": "^3.0.2",
     "dotenv-safe": "^9.1.0",

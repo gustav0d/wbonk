@@ -1,0 +1,14 @@
+fly.toml
+Dockerfile
+.dockerignore
+node_modules
+.git
+**/node_modules
+.gitignore
+.dockerignore
+**/*.md
+**/test
+**/tests
+**/__tests__
+**/*.spec.*
+**/*.test.*

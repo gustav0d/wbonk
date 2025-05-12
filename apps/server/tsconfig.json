@@ -5,12 +5,7 @@
     "incremental": true,
     "sourceMap": true,
     "allowSyntheticDefaultImports": true,
-    "outDir": "./build/tsc",
-    "rootDir": "./src",
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["./src/*"]
-    },
+    "outDir": "./dist/tsc",
     "tsBuildInfoFile": "./dist/tsconfig.tsbuildinfo",
     "preserveSymlinks": true,
     "typeRoots": ["./src/__tests__/@types"],
