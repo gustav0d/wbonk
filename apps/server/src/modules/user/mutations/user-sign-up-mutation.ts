@@ -60,7 +60,7 @@ const UserSignUpMutation = mutationWithClientMutationId({
       // for now, set a default accountName like this (maybe ask to the user later?)
       accountName: `${user.name}-${new Types.ObjectId().toString()}`,
       user: user._id,
-      balance: 0, // default balance
+      balance: 100000, // default balance
     }).save();
 
     const token = generateToken(user);
