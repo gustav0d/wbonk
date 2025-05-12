@@ -11,13 +11,13 @@ import {
   timestampResolver,
 } from '@entria/graphql-mongo-helpers';
 
-import { nodeInterface, registerTypeLoader } from '@/modules/node/typeRegister';
 import { LedgerModel } from './ledger-model';
 import { LedgerLoader } from './ledger-loader';
 import { UserLoader } from '../user/user-loader';
 import { UserType } from '../user/user-type';
 import { TransactionLoader } from '../transaction/transaction-loader';
 import { TransactionType } from '../transaction/transaction-type';
+import { nodeInterface, registerTypeLoader } from '../node/typeRegister';
 
 const LedgerType = new GraphQLObjectType<LedgerModel>({
   name: 'Ledger',

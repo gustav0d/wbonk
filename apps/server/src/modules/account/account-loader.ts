@@ -1,8 +1,7 @@
 import { createLoader } from '@entria/graphql-mongo-helpers';
 
-import { registerLoader } from '@/modules/loader/loaderRegister';
-
 import { Account } from './account-model';
+import { registerLoader } from '../loader/loaderRegister';
 
 const loaderName = 'AccountLoader';
 

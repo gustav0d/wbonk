@@ -1,7 +1,6 @@
 import { GraphQLObjectType, GraphQLString } from 'graphql';
-
-import { FieldError } from '@/utils/field-error';
-import { GraphQLContext } from '@/graphql/context';
+import { FieldError } from '../../utils/field-error';
+import { GraphQLContext } from '../../graphql/context';
 
 const FieldErrorType = new GraphQLObjectType<FieldError, GraphQLContext>({
   name: 'FieldError',

@@ -1,17 +1,20 @@
 import { GraphQLObjectType } from 'graphql';
 import { connectionArgs, withFilter } from '@entria/graphql-mongo-helpers';
 
-import { GraphQLContext } from '@/graphql/context';
-import { nodeField, nodesField } from '@/modules/node/typeRegister';
-import { AccountLoader } from '@/modules/account/account-loader';
-import { AccountConnection, AccountType } from '@/modules/account/account-type';
-import { TransactionLoader } from '@/modules/transaction/transaction-loader';
-import { TransactionConnection } from '@/modules/transaction/transaction-type';
-import { UserConnection, UserType } from '@/modules/user/user-type';
-import { UserLoader } from '@/modules/user/user-loader';
-import { Account } from '@/modules/account/account-model';
-import { LedgerLoader } from '@/modules/ledger/ledger-loader';
-import { LedgerConnection } from '@/modules/ledger/ledger-type';
+import { GraphQLContext } from '../graphql/context';
+import { nodeField, nodesField } from '../modules/node/typeRegister';
+import { AccountLoader } from '../modules/account/account-loader';
+import {
+  AccountConnection,
+  AccountType,
+} from '../modules/account/account-type';
+import { TransactionLoader } from '../modules/transaction/transaction-loader';
+import { TransactionConnection } from '../modules/transaction/transaction-type';
+import { UserConnection, UserType } from '../modules/user/user-type';
+import { UserLoader } from '../modules/user/user-loader';
+import { Account } from '../modules/account/account-model';
+import { LedgerLoader } from '../modules/ledger/ledger-loader';
+import { LedgerConnection } from '../modules/ledger/ledger-type';
 
 export const QueryType = new GraphQLObjectType({
   name: 'Query',

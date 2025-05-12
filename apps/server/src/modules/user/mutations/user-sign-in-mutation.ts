@@ -7,9 +7,9 @@ import { UserType } from '../user-type';
 import { UserModel } from '../user-model';
 import { UserLoader } from '../user-loader';
 import { GraphQLContext } from '../../../graphql/context';
-import { fieldError } from '@/utils/field-error';
-import { generateToken } from '@/auth';
-import { FieldErrorField } from '@/modules/field-error/field-error-field';
+import { fieldError } from '../../../utils/field-error';
+import { generateToken } from '../../../auth';
+import { FieldErrorField } from '../../field-error/field-error-field';
 
 type UserSignInMutationArgs = {
   email: string;

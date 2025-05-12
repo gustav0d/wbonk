@@ -1,8 +1,6 @@
 import { ParameterizedContext } from 'koa';
-
-import { Dataloaders } from '@/modules/loader/loaderRegister';
-
-import { UserDocument } from '@/modules/user/user-model';
+import { Dataloaders } from '../modules/loader/loaderRegister';
+import { UserDocument } from '../modules/user/user-model';
 
 interface GraphQLContext {
   ctx: ParameterizedContext;

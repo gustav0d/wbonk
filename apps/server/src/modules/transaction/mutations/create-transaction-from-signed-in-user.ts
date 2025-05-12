@@ -2,16 +2,16 @@ import { successField } from '@entria/graphql-mongo-helpers';
 import { GraphQLInt, GraphQLNonNull, GraphQLString } from 'graphql';
 import { mutationWithClientMutationId } from 'graphql-relay';
 
-import { GraphQLContext } from '@/graphql/context';
-import { AccountLoader } from '@/modules/account/account-loader';
-import { Account } from '@/modules/account/account-model';
-import { FieldErrorField } from '@/modules/field-error/field-error-field';
+import { GraphQLContext } from '../../../graphql/context';
+import { AccountLoader } from '../../account/account-loader';
+import { Account } from '../../account/account-model';
+import { FieldErrorField } from '../../field-error/field-error-field';
 import {
   generateIdempotencyKeySuffixForReceiver,
   generateIdempotencyKeySuffixForSender,
   Ledger,
-} from '@/modules/ledger/ledger-model';
-import { fieldError } from '@/utils/field-error';
+} from '../../ledger/ledger-model';
+import { fieldError } from '../../../utils/field-error';
 import { Transaction } from '../transaction-model';
 import { TransactionType } from '../transaction-type';
 import { TransactionLoader } from '../transaction-loader';

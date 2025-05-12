@@ -5,11 +5,11 @@ import { graphqlHTTP, OptionsData } from 'koa-graphql';
 import KoaLogger from 'koa-logger';
 import Router from 'koa-router';
 
-import { schema } from '@/schema/schema';
-import { getContext } from '@/getContext';
+import { schema } from '../schema/schema';
+import { getContext } from '../getContext';
 import { GraphQLError } from 'graphql';
-import { getUser } from '@/auth';
-import { config, logEnvironments } from '@/config';
+import { getUser } from '../auth';
+import { config, logEnvironments } from '../config';
 
 const app = new Koa();
 

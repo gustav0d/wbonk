@@ -7,13 +7,16 @@ import { UserType } from '../user-type';
 import { UserModel } from '../user-model';
 import { UserLoader } from '../user-loader';
 import { GraphQLContext } from '../../../graphql/context';
-import { fieldError } from '@/utils/field-error';
-import { NewUserArgs, validateAndSanitizeNewUser } from '@/utils/validate-user';
-import { generateToken } from '@/auth';
-import { FieldErrorField } from '@/modules/field-error/field-error-field';
-import { Account } from '@/modules/account/account-model';
-import { AccountType } from '@/modules/account/account-type';
-import { AccountLoader } from '@/modules/account/account-loader';
+import {
+  NewUserArgs,
+  validateAndSanitizeNewUser,
+} from '../../../utils/validate-user';
+import { Account } from '../../account/account-model';
+import { generateToken } from '../../../auth';
+import { AccountLoader } from '../../account/account-loader';
+import { FieldErrorField } from '../../field-error/field-error-field';
+import { AccountType } from '../../account/account-type';
+import { fieldError } from '../../../utils/field-error';
 
 type UserSignUpMutationArgs = NewUserArgs;
 

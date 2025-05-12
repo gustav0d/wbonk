@@ -1,6 +1,6 @@
 import { createLoader } from '@entria/graphql-mongo-helpers';
 
-import { registerLoader } from '@/modules/loader/loaderRegister';
+import { registerLoader } from '../loader/loaderRegister';
 
 import { Ledger } from './ledger-model';
 

@@ -9,7 +9,8 @@
     "tsBuildInfoFile": "./dist/tsconfig.tsbuildinfo",
     "preserveSymlinks": true,
     "typeRoots": ["./src/__tests__/@types"],
-    "isolatedModules": true
+    "isolatedModules": true,
+    "rootDir": "./src"
   },
   "include": ["src/**/*.ts"],
   "exclude": [
