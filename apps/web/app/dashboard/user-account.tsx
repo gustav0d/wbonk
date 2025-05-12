@@ -3,6 +3,7 @@ import { graphql } from 'relay-runtime';
 import type { userAccountQuery } from '~/__generated__/userAccountQuery.graphql';
 import { UserDetail } from './user-detail';
 import { AccountDetail } from './account-detail';
+import { TypographyH3 } from '~/components/ui/typography/h3';
 
 const userAccountQuery = graphql`
   query userAccountQuery {
@@ -33,7 +34,7 @@ export default function UserAccount() {
         <UserDetail user={user} />
       ) : (
         <div className="rounded-lg border border-muted p-6 shadow-sm">
-          <h3 className="font-semibold">User Profile</h3>
+          <TypographyH3>User Profile</TypographyH3>
           <p className="text-muted-foreground">
             User information not available
           </p>
@@ -44,7 +45,7 @@ export default function UserAccount() {
         <AccountDetail account={account} />
       ) : (
         <div className="rounded-lg border border-muted p-6 shadow-sm">
-          <h3 className="font-semibold">Account Information</h3>
+          <TypographyH3>Account Information</TypographyH3>
           <p className="text-muted-foreground">
             No account information available
           </p>
