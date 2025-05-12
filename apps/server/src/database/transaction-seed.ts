@@ -54,7 +54,7 @@ export const createTransactionSeeds = async () => {
     },
     {
       publicId: Math.floor(100000000 + Math.random() * 900000000),
-      amount: 10000, // $100.00
+      amount: 20000, // $200.00
       status: 'PAID' as TransactionStatus,
       paymentType: 'PIX' as TransactionType,
       originAccount: accounts[1]?._id,
