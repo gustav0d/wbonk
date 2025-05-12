@@ -1,15 +1,18 @@
-import path from 'path';
-
-import dotenvSafe from 'dotenv-safe';
+import { join } from 'node:path';
 
 const cwd = process.cwd();
 
-const root = path.join.bind(cwd);
+const root = join.bind(cwd);
 
-dotenvSafe.config({
-  path: root('.env'),
-  sample: root('.env.example'),
-});
+const logEnvironments = ['production', 'development', 'prod', 'dev'];
+
+if (process.env.NODE_ENV !== 'production') {
+  const { config } = require('dotenv-safe');
+  config({
+    path: root('.env'),
+    sample: root('.env.example'),
+  });
+}
 
 const ENV = process.env;
 
@@ -19,7 +22,5 @@ const config = {
   MONGO_URI: ENV.MONGO_URI ?? '',
   JWT_SECRET: ENV.JWT_SECRET ?? 'test',
 };
-
-const logEnvironments = ['production', 'development', 'prod', 'dev'];
 
 export { config, logEnvironments };
