@@ -15,6 +15,7 @@
     "test:coverage": "pnpm run test --coverage"
   },
   "dependencies": {
+    "@wbonk/typescript-config": "@workspace:*",
     "@entria/graphql-mongo-helpers": "^1.1.2",
     "bcryptjs": "^3.0.2",
     "dotenv-safe": "^9.1.0",
