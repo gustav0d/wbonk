@@ -39,4 +39,4 @@ ENV PORT 8080
 
 # Expose port and start
 EXPOSE 8080
-CMD ["pnpm", "run" , "start"]
+CMD ["npm", "run" , "start"]
