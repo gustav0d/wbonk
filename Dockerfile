@@ -27,16 +27,19 @@ FROM node:22.15.0-slim
 WORKDIR /app
 
 # Copy built files from builder
-COPY --from=builder /app/apps/server/dist ./dist
-COPY --from=builder /app/apps/server/package.json ./
+COPY --from=builder /app/apps/server/dist /app/dist
+COPY --from=builder /app/apps/server/package.json /app/
 
 # Copy production node_modules
-COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/node_modules /app/node_modules
+COPY --from=builder /app/apps/server/node_modules /app/apps/server/node_modules
 
 # Environment variables
 ENV NODE_ENV production
 ENV PORT 8080
+# Tell Node to look for modules on apps/server/node_modules
+ENV NODE_PATH=/app/node_modules:/app/apps/server/node_modules
 
 # Expose port and start
 EXPOSE 8080
-CMD ["npm", "run" , "start"]
+CMD ["npm", "run", "start"]
