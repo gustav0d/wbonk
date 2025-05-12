@@ -49,6 +49,10 @@ export const QueryType = new GraphQLObjectType({
         ...connectionArgs,
       },
       resolve: async (_, args, context: GraphQLContext) => {
+        if (!context.user) {
+          throw new Error('Unauthorized');
+        }
+
         // withFilter builds the condition filter like this: [field]_[operator]
         // from: https://github.com/woovibr/graphql-mongo-helpers/blob/main/src/buildMongoConditionsFromFilters.ts
         const argsOrArgsWithFilter = context.user

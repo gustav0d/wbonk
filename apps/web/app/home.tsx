@@ -3,7 +3,6 @@ import type { Route } from './+types/home';
 import { TypographyH2 } from '~/components/ui/typography/h2';
 import { Button } from '~/components/ui/button';
 import { Link } from 'react-router';
-import { UserList } from './user-list/user-list';
 import { getToken } from './auth/security';
 
 export function meta({}: Route.MetaArgs) {
@@ -44,7 +43,6 @@ export default function Home() {
               </div>
             )}
           </nav>
-          <UserList />
         </div>
       </div>
     </main>
