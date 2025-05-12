@@ -139,6 +139,9 @@ Don't forget to give the project a star! Thanks again!
 
 - [turbo](https://turbo.build/repo/docs/getting-started/add-to-existing-repository)
 - [woovi-playground](https://github.com/woovibr/woovi-playground)
+- [@hallexcosta challenge](https://github.com/hallexcosta/woovi-fullstack-challenger)
+- [@Eckzzo notdiscord](https://github.com/Eckzzo/notdiscord/)
+- [@sibelius relay-realworld](https://github.com/sibelius/relay-realworld/)
 
 <!-- CONTACT -->
 
