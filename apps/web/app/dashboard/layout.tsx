@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import { Outlet, NavLink, Navigate } from 'react-router';
 import { getToken, useLogout } from '~/auth/security';
 import { Button } from '~/components/ui/button';
@@ -26,10 +27,16 @@ export default function DashboardLayout() {
                 Dashboard
               </NavLink>
               <NavLink
-                to="/dashboard/new-transaction"
+                to="/dashboard/create-transaction"
                 className={({ isActive }) => (isActive ? 'underline' : '')}
               >
                 New transaction
+              </NavLink>
+              <NavLink
+                to="/dashboard/transactions"
+                className={({ isActive }) => (isActive ? 'underline' : '')}
+              >
+                All transactions
               </NavLink>
               <NavLink
                 to="/dashboard/account"
@@ -42,7 +49,9 @@ export default function DashboardLayout() {
           </div>
         </header>
         <main className="max-w-[900px] w-full space-y-6 px-4">
-          <Outlet />
+          <Suspense fallback="loading...">
+            <Outlet />
+          </Suspense>
         </main>
       </div>
     </div>

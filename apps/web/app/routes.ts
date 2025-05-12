@@ -16,11 +16,12 @@ export default [
 
   ...prefix('dashboard', [
     layout('./dashboard/layout.tsx', [
-      index('./dashboard/home.tsx'),
+      index('./dashboard/dashboard-home.tsx'),
       route(
         'create-transaction',
         './dashboard/create-transaction/create-transaction.tsx'
       ),
+      route('transactions', './dashboard/transactions.tsx'),
       route('account', './dashboard/user-account.tsx'),
     ]),
   ]),
