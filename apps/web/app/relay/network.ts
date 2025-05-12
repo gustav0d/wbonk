@@ -49,7 +49,7 @@ function createNetwork() {
 }
 
 // dev: http://127.0.0.1:3001/graphql
-const GRAPHQL_ENDPOINT = import.meta.env.GRAPHQL_API_ENDPOINT;
+const GRAPHQL_ENDPOINT = import.meta.env.VITE_GRAPHQL_API_ENDPOINT;
 
 async function networkFetch(params: RequestParameters, variables: Variables) {
   const authToken = getToken();

@@ -7,7 +7,7 @@ interface ViteTypeOptions {
 }
 
 interface ImportMetaEnv {
-  readonly GRAPHQL_API_ENDPOINT: string;
+  readonly VITE_GRAPHQL_API_ENDPOINT: string;
 }
 
 interface ImportMeta {
