@@ -98,10 +98,7 @@ export default function NewTransaction() {
       if (mutationResponse.transaction?.id) {
         setSuccess(true);
         setTransactionId(mutationResponse.transaction.id);
-        setTimeout(() => {
-          setIdempotencyKey(uuidv4());
-          navigate('/dashboard');
-        }, 5000);
+        setIdempotencyKey(uuidv4());
         form.reset(); // Reset the form on success
       } else {
         setGeneralError('Something went wrong. Please try again.');
@@ -135,9 +132,15 @@ export default function NewTransaction() {
                     Transaction ID: {transactionId}
                   </div>
                 )}
-                <Link to="/dashboard/transactions">
-                  Click here to go back to your transactions
-                </Link>
+                <div className="mt-4 text-center">
+                  <Link
+                    to="/dashboard/transactions"
+                    className="text-blue-600 font-semibold hover:underline"
+                  >
+                    Click here to go see to your transactions
+                  </Link>
+                  Or send money to someone else!
+                </div>
               </AlertDescription>
             </Alert>
           )}
