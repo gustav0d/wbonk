@@ -1,6 +1,11 @@
 <div id="top"></div>
 
-## wbonk
+# WBonk
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Status-Active-success?style=for-the-badge" alt="Status" />
+  <img src="https://img.shields.io/badge/Version-1.0.0-blue?style=for-the-badge" alt="Version" />
+</p>
 
 <!-- TABLE OF CONTENTS -->
 <details>
@@ -24,9 +29,21 @@
   </ol>
 </details>
 
-## About the project
+## About the Project
 
-wbonk is a bank CRUD.
+<p align="center">
+  <strong>WBonk is a modern banking application that allows users to send transactions.</strong>
+</p>
+
+WBonk provides a full-featured banking platform with the following capabilities:
+
+- Account management with user authentication
+- Transaction history and tracking
+- Money transfers between accounts
+- User-friendly dashboard experience
+- Secure API with GraphQL and JWT authentication
+
+The application consists of a React frontend with a Node.js backend, using GraphQL for API requests and MongoDB for data storage.
 
 ### Built With
 
@@ -38,11 +55,11 @@ wbonk is a bank CRUD.
 
 ## Getting Started
 
-To get a local copy up and running follow these simple example steps.
+Follow these instructions to set up the project locally.
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
+Make sure you have the following installed:
 
 - Node.js
 
@@ -62,33 +79,50 @@ This is an example of how to list things you need to use the software and how to
   https://www.docker.com/get-started/
   ```
 
-## Installation
+### Installation
 
-Clone the repo
+1. Clone the repository
 
-```sh
-git clone https://github.com/gustav0d/wbonk.git
-```
+   ```sh
+   git clone https://github.com/gustav0d/wbonk.git
+   cd wbonk
+   ```
 
-1. Install packages
+2. Install dependencies
 
    ```sh
    pnpm install
    ```
 
-2. Run containers
+3. Configure environment
+
+   ```sh
+   pnpm config:local
+   ```
+
+4. Compile relay on the frontend
+
+   ```sh
+   pnpm --filter @wbonk/web relay
+   ```
+
+5. Run containers
 
    ```sh
    pnpm compose:up
    ```
 
-3. Run the Project
+6. Start the development servers
 
-   ```sh
-   pnpm dev
-   ```
+```sh
+pnpm dev
+```
 
-# Contributing
+The web application will be available at `http://localhost:5173`
+
+The API (with GraphQL playground) will be available at `http://localhost:3001/graphql`
+
+## Contributing
 
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
