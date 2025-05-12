@@ -140,6 +140,8 @@ export default function NewTransaction() {
                     >
                       Click here to go see to your transactions
                     </Link>
+                  </div>
+                  <div className="mt-4 text-center">
                     Or send money to someone else!
                   </div>
                 </AlertDescription>
