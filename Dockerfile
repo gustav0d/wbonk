@@ -18,9 +18,6 @@ RUN pnpm install --frozen-lockfile
 # Copy all files
 COPY . .
 
-# Remove any nested node_modules that might cause conflicts
-RUN find . -name "node_modules" -type d -prune -exec rm -rf '{}' +
-
 # Build the server
 RUN pnpm run --filter @wbonk/server build
 
@@ -30,7 +27,7 @@ FROM node:22.15.0-slim
 WORKDIR /app
 
 # Copy built files from builder
-COPY --from=builder /app/apps/server/build ./build
+COPY --from=builder /app/apps/server/dist ./dist
 COPY --from=builder /app/apps/server/package.json ./
 
 # Copy production node_modules
