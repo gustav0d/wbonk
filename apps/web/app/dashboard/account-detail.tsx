@@ -21,6 +21,7 @@ import {
   formatDate,
 } from './transaction-item';
 import { TypographyH3 } from '~/components/ui/typography/h3';
+import { Suspense } from 'react';
 
 const AccountDetailFragment = graphql`
   fragment accountDetail on Account {
@@ -96,58 +97,60 @@ export function AccountDetail(props: Props) {
           <CardTitle className="text-xl">Account Information</CardTitle>
           <CardDescription>Your financial account details</CardDescription>
         </CardHeader>
-        <CardContent className="grid md:grid-cols-2 gap-6">
-          <div className="space-y-4">
-            <div>
-              <TypographyH3>ACCOUNT NAME</TypographyH3>
-              <p className="text-lg font-semibold">
-                {account.accountName || 'My Account'}
-              </p>
-            </div>
-
-            <div>
-              <TypographyH3>ACCOUNT ID</TypographyH3>
-              <p className="text-lg font-mono">{account._id}</p>
-            </div>
-
-            <div>
-              <TypographyH3>ACCOUNT AGE</TypographyH3>
-              <p className="text-lg font-semibold">
-                <div className="flex items-center">
-                  <Calendar className="h-4 w-4 mr-2 text-gray-500" />
-                  {accountAge} days (Created {formatDate(account.createdAt)})
-                </div>
-              </p>
-            </div>
-          </div>
-
-          <div className="flex flex-col justify-between">
-            <div>
-              <TypographyH3>CURRENT BALANCE</TypographyH3>
-              <p className="text-3xl font-bold">
-                {formatCurrency(parseInt(account.balance || '0', 10))}
-              </p>
-            </div>
-
-            <div className="grid grid-cols-2 gap-4 mt-4">
-              <div className="flex items-center p-3 bg-green-50 rounded-md">
-                <ArrowDownLeft className="h-5 w-5 text-green-500 mr-2" />
-                <div>
-                  <p className="text-xs text-green-700">Incoming</p>
-                  <p className="font-semibold">{incomingCount}</p>
-                </div>
+        <Suspense fallback="loading...">
+          <CardContent className="grid md:grid-cols-2 gap-6">
+            <div className="space-y-4">
+              <div>
+                <TypographyH3>ACCOUNT NAME</TypographyH3>
+                <p className="text-lg font-semibold">
+                  {account.accountName || 'My Account'}
+                </p>
               </div>
 
-              <div className="flex items-center p-3 bg-red-50 rounded-md">
-                <ArrowUpRight className="h-5 w-5 text-red-500 mr-2" />
-                <div>
-                  <p className="text-xs text-red-700">Outgoing</p>
-                  <p className="font-semibold">{outgoingCount}</p>
+              <div>
+                <TypographyH3>ACCOUNT ID</TypographyH3>
+                <p className="text-lg font-mono">{account._id}</p>
+              </div>
+
+              <div>
+                <TypographyH3>ACCOUNT AGE</TypographyH3>
+                <p className="text-lg font-semibold">
+                  <div className="flex items-center">
+                    <Calendar className="h-4 w-4 mr-2 text-gray-500" />
+                    {accountAge} days (Created {formatDate(account.createdAt)})
+                  </div>
+                </p>
+              </div>
+            </div>
+
+            <div className="flex flex-col justify-between">
+              <div>
+                <TypographyH3>CURRENT BALANCE</TypographyH3>
+                <p className="text-3xl font-bold">
+                  {formatCurrency(parseInt(account.balance || '0', 10))}
+                </p>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4 mt-4">
+                <div className="flex items-center p-3 bg-green-50 rounded-md">
+                  <ArrowDownLeft className="h-5 w-5 text-green-500 mr-2" />
+                  <div>
+                    <p className="text-xs text-green-700">Incoming</p>
+                    <p className="font-semibold">{incomingCount}</p>
+                  </div>
+                </div>
+
+                <div className="flex items-center p-3 bg-red-50 rounded-md">
+                  <ArrowUpRight className="h-5 w-5 text-red-500 mr-2" />
+                  <div>
+                    <p className="text-xs text-red-700">Outgoing</p>
+                    <p className="font-semibold">{outgoingCount}</p>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </CardContent>
+          </CardContent>
+        </Suspense>
         <CardFooter className="border-t pt-4">
           <Button
             className="mr-2"
@@ -170,28 +173,30 @@ export function AccountDetail(props: Props) {
           <CardTitle>Recent Transactions</CardTitle>
           <CardDescription>Your latest financial activities</CardDescription>
         </CardHeader>
-        <CardContent>
-          {recentTransactions.length > 0 ? (
-            <div className="space-y-4">
-              {recentTransactions.map((edge) => {
-                const transaction = edge?.node;
-                if (!transaction) return null;
+        <Suspense fallback="loading...">
+          <CardContent>
+            {recentTransactions.length > 0 ? (
+              <div className="space-y-4">
+                {recentTransactions.map((edge) => {
+                  const transaction = edge?.node;
+                  if (!transaction) return null;
 
-                return (
-                  <TransactionItem
-                    key={transaction.id}
-                    transaction={transaction}
-                    currentAccountId={currentAccountId}
-                  />
-                );
-              })}
-            </div>
-          ) : (
-            <div className="text-center py-8 text-gray-500">
-              No recent transactions found
-            </div>
-          )}
-        </CardContent>
+                  return (
+                    <TransactionItem
+                      key={transaction.id}
+                      transaction={transaction}
+                      currentAccountId={currentAccountId}
+                    />
+                  );
+                })}
+              </div>
+            ) : (
+              <div className="text-center py-8 text-gray-500">
+                No recent transactions found
+              </div>
+            )}
+          </CardContent>
+        </Suspense>
         <CardFooter className="flex justify-center border-t pt-4">
           <Button
             variant="outline"

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import { useLazyLoadQuery } from 'react-relay';
 import { graphql } from 'relay-runtime';
 
@@ -195,85 +195,88 @@ export default function Transactions() {
             transactions
           </CardDescription>
         </CardHeader>
-        <CardContent>
-          {filteredTransactions.length > 0 ? (
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Type</TableHead>
-                  <TableHead>Counterparty</TableHead>
-                  <TableHead>Amount</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Method</TableHead>
-                  <TableHead>Date</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {filteredTransactions.map((edge) => {
-                  const transaction = edge?.node;
-                  if (!transaction) return null;
+        <Suspense fallback="loading">
+          <CardContent>
+            {filteredTransactions.length > 0 ? (
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Type</TableHead>
+                    <TableHead>Counterparty</TableHead>
+                    <TableHead>Amount</TableHead>
+                    <TableHead>Status</TableHead>
+                    <TableHead>Method</TableHead>
+                    <TableHead>Date</TableHead>
+                  </TableRow>
+                </TableHeader>
 
-                  const isOutgoing = transaction.originAccount?.id === me?.id;
-                  const amount = transaction.amount || 0;
-                  const formattedAmount = formatCurrency(amount);
+                <TableBody>
+                  {filteredTransactions.map((edge) => {
+                    const transaction = edge?.node;
+                    if (!transaction) return null;
 
-                  const counterparty = isOutgoing
-                    ? transaction.receiverAccount
-                    : transaction.originAccount;
+                    const isOutgoing = transaction.originAccount?.id === me?.id;
+                    const amount = transaction.amount || 0;
+                    const formattedAmount = formatCurrency(amount);
 
-                  return (
-                    <TableRow key={transaction.id}>
-                      <TableCell>
-                        <div className="flex items-center">
-                          <div
-                            className={`p-2 rounded-full mr-2 ${isOutgoing ? 'bg-red-50' : 'bg-green-50'}`}
-                          >
-                            {isOutgoing ? (
-                              <ArrowUpRight className="h-4 w-4 text-red-500" />
-                            ) : (
-                              <ArrowDownLeft className="h-4 w-4 text-green-500" />
-                            )}
+                    const counterparty = isOutgoing
+                      ? transaction.receiverAccount
+                      : transaction.originAccount;
+
+                    return (
+                      <TableRow key={transaction.id}>
+                        <TableCell>
+                          <div className="flex items-center">
+                            <div
+                              className={`p-2 rounded-full mr-2 ${isOutgoing ? 'bg-red-50' : 'bg-green-50'}`}
+                            >
+                              {isOutgoing ? (
+                                <ArrowUpRight className="h-4 w-4 text-red-500" />
+                              ) : (
+                                <ArrowDownLeft className="h-4 w-4 text-green-500" />
+                              )}
+                            </div>
+                            <span>{isOutgoing ? 'Sent' : 'Received'}</span>
                           </div>
-                          <span>{isOutgoing ? 'Sent' : 'Received'}</span>
-                        </div>
-                      </TableCell>
-                      <TableCell>
-                        <div>
-                          <div className="font-medium">
-                            {counterparty?.accountName || 'Unknown'}
+                        </TableCell>
+                        <TableCell>
+                          <div>
+                            <div className="font-medium">
+                              {counterparty?.accountName || 'Unknown'}
+                            </div>
                           </div>
-                        </div>
-                      </TableCell>
-                      <TableCell
-                        className={`font-medium ${isOutgoing ? 'text-red-600' : 'text-green-600'}`}
-                      >
-                        {isOutgoing ? '-' : '+'}
-                        {formattedAmount}
-                      </TableCell>
-                      <TableCell>
-                        <Badge variant={getStatusVariant(transaction.status)}>
-                          {transaction.status}
-                        </Badge>
-                      </TableCell>
-                      <TableCell>
-                        {transaction.paymentType || 'Standard'}
-                      </TableCell>
-                      <TableCell>
-                        <div className="text-sm">
-                          {formatDate(transaction.createdAt)}
-                        </div>
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
-              </TableBody>
-            </Table>
-          ) : (
-            <div className="text-center py-8 text-gray-500">
-              No transactions found matching your filters
-            </div>
-          )}
-        </CardContent>
+                        </TableCell>
+                        <TableCell
+                          className={`font-medium ${isOutgoing ? 'text-red-600' : 'text-green-600'}`}
+                        >
+                          {isOutgoing ? '-' : '+'}
+                          {formattedAmount}
+                        </TableCell>
+                        <TableCell>
+                          <Badge variant={getStatusVariant(transaction.status)}>
+                            {transaction.status}
+                          </Badge>
+                        </TableCell>
+                        <TableCell>
+                          {transaction.paymentType || 'Standard'}
+                        </TableCell>
+                        <TableCell>
+                          <div className="text-sm">
+                            {formatDate(transaction.createdAt)}
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
+                </TableBody>
+              </Table>
+            ) : (
+              <div className="text-center py-8 text-gray-500">
+                No transactions found matching your filters
+              </div>
+            )}
+          </CardContent>
+        </Suspense>
       </Card>
     </div>
   );

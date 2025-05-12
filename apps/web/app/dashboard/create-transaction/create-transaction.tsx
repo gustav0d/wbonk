@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import { Link, useNavigate } from 'react-router';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
@@ -120,91 +120,96 @@ export default function NewTransaction() {
           </CardTitle>
           <CardDescription>Transfer funds to another account</CardDescription>
         </CardHeader>
-        <CardContent>
-          {success && (
-            <Alert className="mb-6 bg-green-50 text-green-800 border-green-200">
-              <CheckCircle className="h-4 w-4" />
-              <AlertTitle>Transaction Successful</AlertTitle>
-              <AlertDescription>
-                Your transaction has been processed successfully.
-                {transactionId && (
-                  <div className="text-xs mt-1">
-                    Transaction ID: {transactionId}
+        <Suspense fallback="loading">
+          <CardContent>
+            {success && (
+              <Alert className="mb-6 bg-green-50 text-green-800 border-green-200">
+                <CheckCircle className="h-4 w-4" />
+                <AlertTitle>Transaction Successful</AlertTitle>
+                <AlertDescription>
+                  Your transaction has been processed successfully.
+                  {transactionId && (
+                    <div className="text-xs mt-1">
+                      Transaction ID: {transactionId}
+                    </div>
+                  )}
+                  <div className="mt-4 text-center">
+                    <Link
+                      to="/dashboard/transactions"
+                      className="text-blue-600 font-semibold hover:underline"
+                    >
+                      Click here to go see to your transactions
+                    </Link>
+                    Or send money to someone else!
                   </div>
-                )}
-                <div className="mt-4 text-center">
-                  <Link
-                    to="/dashboard/transactions"
-                    className="text-blue-600 font-semibold hover:underline"
-                  >
-                    Click here to go see to your transactions
-                  </Link>
-                  Or send money to someone else!
-                </div>
-              </AlertDescription>
-            </Alert>
-          )}
+                </AlertDescription>
+              </Alert>
+            )}
 
-          {generalError && (
-            <Alert className="mb-6 bg-red-50 text-red-800 border-red-200">
-              <AlertCircle className="h-4 w-4" />
-              <AlertTitle>Error</AlertTitle>
-              <AlertDescription>{generalError}</AlertDescription>
-            </Alert>
-          )}
+            {generalError && (
+              <Alert className="mb-6 bg-red-50 text-red-800 border-red-200">
+                <AlertCircle className="h-4 w-4" />
+                <AlertTitle>Error</AlertTitle>
+                <AlertDescription>{generalError}</AlertDescription>
+              </Alert>
+            )}
 
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-              <FormField
-                control={form.control}
-                name="receiverAccountId"
-                disabled={success}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Receiver Account</FormLabel>
-                    <FormControl>
-                      <ReceiverAccountSelect
-                        value={field.value}
-                        onChange={field.onChange}
-                        disabled={field.disabled}
-                      />
-                    </FormControl>
-                    <FormDescription>
-                      The account ID of the recipient
-                    </FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="amount"
-                disabled={success}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Amount</FormLabel>
-                    <FormControl>
-                      <Input type="number" placeholder="0" {...field} />
-                    </FormControl>
-                    <FormDescription>
-                      Amount in cents (whole number)
-                    </FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <Button
-                type="submit"
-                className="w-full"
-                disabled={isSubmitting || success}
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="space-y-6"
               >
-                {isSubmitting ? 'Processing...' : 'Send Money'}
-              </Button>
-            </form>
-          </Form>
-        </CardContent>
+                <FormField
+                  control={form.control}
+                  name="receiverAccountId"
+                  disabled={success}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Receiver Account</FormLabel>
+                      <FormControl>
+                        <ReceiverAccountSelect
+                          value={field.value}
+                          onChange={field.onChange}
+                          disabled={field.disabled}
+                        />
+                      </FormControl>
+                      <FormDescription>
+                        The account ID of the recipient
+                      </FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="amount"
+                  disabled={success}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Amount</FormLabel>
+                      <FormControl>
+                        <Input type="number" placeholder="0" {...field} />
+                      </FormControl>
+                      <FormDescription>
+                        Amount in cents (whole number)
+                      </FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <Button
+                  type="submit"
+                  className="w-full"
+                  disabled={isSubmitting || success}
+                >
+                  {isSubmitting ? 'Processing...' : 'Send Money'}
+                </Button>
+              </form>
+            </Form>
+          </CardContent>
+        </Suspense>
         <CardFooter className="flex justify-end">
           <Button variant="outline" onClick={() => navigate('/dashboard')}>
             Back to Dashboard
