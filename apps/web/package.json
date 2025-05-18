@@ -24,6 +24,7 @@
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
     "get-graphql-schema": "^2.1.2",
+    "graphiql": "^4.0.5",
     "isbot": "^5.1.27",
     "lucide-react": "^0.509.0",
     "react": "^19.1.0",

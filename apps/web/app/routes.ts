@@ -7,6 +7,8 @@ import {
 } from '@react-router/dev/routes';
 
 export default [
+  route('/playground', './graphiql/playground.tsx'),
+
   index('home.tsx'),
 
   layout('./auth/layout.tsx', [
