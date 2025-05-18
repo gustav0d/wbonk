@@ -13,7 +13,8 @@
     "db:seed:transaction": "CLI=1 tsx ./src/database/transaction-seed.ts",
     "test": "set NODE_ENV=test && jest",
     "test:watch": "pnpm run test --watch",
-    "test:coverage": "pnpm run test --coverage"
+    "test:coverage": "pnpm run test --coverage",
+    "graphiql": "npx ruru -SP -p 3001 -e http://localhost:3000/graphql"
   },
   "dependencies": {
     "@entria/graphql-mongo-helpers": "^1.1.2",
