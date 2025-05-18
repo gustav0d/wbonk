@@ -1,10 +1,9 @@
 import jwt from 'jsonwebtoken';
-import { ParameterizedContext } from 'koa';
 
 import { config } from './config';
 import { UserDocument, UserModel } from './modules/user/user-model';
-
-const AUTH_COOKIE_NAME = 'jwt';
+import { getGraphQLHttpHeaders } from './utils/get-graphql-http-headers';
+import { RequestGraphQLContext } from './get-context';
 
 interface DecodedToken {
   id: string;
@@ -14,8 +13,8 @@ interface GetUserResult {
   user: UserDocument | null;
 }
 
-async function getUser(ctx: ParameterizedContext): Promise<GetUserResult> {
-  const authHeader = ctx.headers.authorization;
+async function getUser(ctx: RequestGraphQLContext): Promise<GetUserResult> {
+  const authHeader = getGraphQLHttpHeaders(ctx, 'authorization');
 
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
     return { user: null };

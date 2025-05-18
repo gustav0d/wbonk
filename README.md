@@ -119,8 +119,21 @@ pnpm dev
 ```
 
 The web application will be available at `http://localhost:5173`
+The server application will be available at `http://localhost:3000`
 
-The API (with GraphQL playground) will be available at `http://localhost:3001/graphql`
+### GraphiQL
+
+You can start GraphQL playground both on the server or on the web.
+
+- The web playground will be available on `http://localhost:5173/playground` automatically
+
+- To run on the server (you will need to install `ruru`)
+
+  ```sh
+  pnpm --filter @wbonk/server graphiql
+  ```
+
+- this one will be available at `http://localhost:3001/graphql`
 
 ## Contributing
 

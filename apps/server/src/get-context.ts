@@ -1,9 +1,13 @@
-import { ParameterizedContext } from 'koa';
+import type { Request } from 'graphql-http';
+import type { IncomingMessage } from 'node:http';
+import type { RequestContext } from 'graphql-http/lib/use/koa';
 import { getDataloaders } from './modules/loader/loaderRegister';
 import { UserDocument } from './modules/user/user-model';
 
+export type RequestGraphQLContext = Request<IncomingMessage, RequestContext>;
+
 interface ContextVars {
-  ctx?: ParameterizedContext;
+  ctx?: RequestGraphQLContext;
   user: UserDocument | null;
 }
 
