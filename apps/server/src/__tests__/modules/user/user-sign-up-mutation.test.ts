@@ -55,7 +55,7 @@ describe('UserSignUpMutation', () => {
       variables.input.email
     );
     expect((result.data as any)?.userSignUp.account).toBeTruthy();
-    expect((result.data as any)?.userSignUp.account.balance).toBe('0');
+    expect((result.data as any)?.userSignUp.account.balance).toBe('100000');
   });
 
   it('should return error when email is already in use', async () => {
