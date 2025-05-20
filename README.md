@@ -22,6 +22,8 @@
       <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
         <li><a href="#installation">Installation</a></li>
+        <li><a href="#postman">Postman</a></li>
+        <li><a href="#graphiql">GraphiQL Playground</a></li>
       </ul>
     </li>
     <li><a href="#contributing">Contributing</a></li>
@@ -120,6 +122,10 @@ pnpm dev
 
 The web application will be available at `http://localhost:5173`
 The server application will be available at `http://localhost:3000`
+
+### Postman
+
+[<img src="https://run.pstmn.io/button.svg" alt="Run In Postman" style="width: 128px; height: 32px;">](https://app.getpostman.com/run-collection/31618362-38efaddd-785a-43af-94d8-5ce938781e6e?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D31618362-38efaddd-785a-43af-94d8-5ce938781e6e%26entityType%3Dcollection%26workspaceId%3D4900b586-8375-4755-b31a-1737c1537f91)
 
 ### GraphiQL
 
