@@ -42,7 +42,10 @@ app.use(async (ctx, next) => {
           {
             message: error.message,
             locations: error.locations,
-            stack: config.NODE_ENV === 'development' ? error.stack : undefined,
+            stack:
+              config.NODE_ENV === 'dev' || config.NODE_ENV === 'development'
+                ? error.stack
+                : undefined,
           },
         ],
       };
