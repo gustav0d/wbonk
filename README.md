@@ -166,7 +166,7 @@ Don't forget to give the project a star! Thanks again!
 
 ## Contact
 
-[Contact me](https://bento.me/dantas)
+[Contact me](https://gusdantas.dev/contact)
 
 Project Link: [https://github.com/gustav0d/wbonk](https://github.com/gustav0d/wbonk)
 
